@@ -1,0 +1,38 @@
+:host::ng-deep .main-toolbar {
+  background: var(--primary-color-uv) !important; /*primary*/
+}
+
+.sitename {
+  color: var(--text-white);
+}
+
+:host::ng-deep .button-header {
+  color: var(--text-white);
+}
+
+:host::ng-deep .button-header.p-button-text:enabled:hover {
+  background-color: var(
+    --secondary-color
+  ) !important; /*rgba(255, 255, 255, 0.15) !important;*/
+  color: var(--toolbar-text-button) !important;
+}
+
+:host::ng-deep .main-toolbar {
+  border-radius: 0px;
+  border: none;
+  top: 0;
+  right: 0;
+  left: 0;
+  position: fixed;
+  z-index: 1030;
+}
+
+:host::ng-deep .mi-cuenta-foto {
+  cursor: pointer;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
+:host::ng-deep .mi-cuenta-foto:hover {
+  opacity: 0.8;
+}

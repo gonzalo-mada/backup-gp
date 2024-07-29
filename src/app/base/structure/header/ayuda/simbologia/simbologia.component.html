@@ -1,0 +1,54 @@
+<p-dialog
+  header="{{ 'ayuda.simbologia.titulo' | translate }}"
+  [(visible)]="show"
+  [modal]="true"
+  [style]="{ width: '60vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  position="top"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+>
+  <p-accordion [multiple]="true">
+    <ng-container *ngFor="let symbol of simbolos">
+      <p-accordionTab *ngIf="symbol.show">
+        <ng-template pTemplate="header">
+          <div>
+            <i class="{{ symbol.icon }}" style="padding-right: 10px"> </i
+            >{{ symbol.titulo | translate }}
+          </div>
+        </ng-template>
+
+        <div class="{{ symbol.subs != null ? 'p-mb-2' : '' }}">
+          {{ symbol.glosa | translate }}
+        </div>
+        <ng-container *ngIf="symbol.subs != null">
+          <p-accordion [multiple]="true" styleClass="mt-2">
+            <ng-container *ngFor="let subsymbol of symbol.subs">
+              <p-accordionTab *ngIf="subsymbol.show">
+                <ng-template pTemplate="header">
+                  <div>
+                    <i class="{{ subsymbol.icon }}" style="padding-right: 10px">
+                    </i
+                    >{{ subsymbol.titulo | translate }}
+                  </div>
+                </ng-template>
+                {{ subsymbol.glosa | translate }}
+              </p-accordionTab>
+            </ng-container>
+          </p-accordion>
+        </ng-container>
+      </p-accordionTab>
+    </ng-container>
+  </p-accordion>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      label="{{ 'primeng.aria.close' | translate }}"
+      icon="pi pi-times"
+      styleClass="p-button-secondary"
+      (click)="show = false"
+      size="small"
+      [text]="true"
+    ></p-button>
+  </ng-template>
+</p-dialog>

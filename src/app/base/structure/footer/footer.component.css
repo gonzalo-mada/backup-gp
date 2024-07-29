@@ -1,0 +1,15 @@
+.footer {
+  color: var(--primary-color);
+}
+
+.link-footer {
+  color: var(--primary-color);
+}
+
+.link-footer {
+  text-decoration: none;
+}
+
+.link-footer:hover {
+  text-decoration: underline;
+}

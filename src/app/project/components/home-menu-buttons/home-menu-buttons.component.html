@@ -1,0 +1,52 @@
+<p-menu #itemsMenu [model]="items" [popup]="true" appendTo="body"></p-menu>
+
+<div class="grid" style="margin-top: 0px">
+  <div
+    class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12"
+    *ngIf="menus.length > 0"
+  >
+    <span class="p-input-icon-left" style="width: 100%">
+      <i class="pi pi-search"></i>
+      <input
+        type="text"
+        pInputText
+        [(ngModel)]="filter"
+        [placeholder]="'menus.filter' | translate"
+        (input)="filtering()"
+      />
+    </span>
+  </div>
+  <div
+    class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12"
+    *ngIf="inview.length > 0"
+  >
+    <div class="grid">
+      <div
+        class="col-12 sm:col-12 md:col-6 lg:col-6 xl:col-4"
+        *ngFor="let menu of inview"
+      >
+        <p-button
+          (click)="
+            menu.items.length === 0
+              ? goToMenu(menu)
+              : showItems(menu.items, itemsMenu, $event)
+          "
+          styleClass="p-button-primary w-full p-3"
+          [title]="menu.descripcion"
+          [outlined]="true"
+          class="menu-button {{
+            menu.items.length === 0 ? 'menu-menu' : 'menu-item'
+          }}"
+        >
+          <div><i class="{{ menu.icono }} mr-2"></i> {{ menu.nombre }}</div>
+        </p-button>
+      </div>
+    </div>
+  </div>
+  <div
+    class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12"
+    *ngIf="inview.length === 0"
+  >
+    {{ "menus.empty" | translate }}
+  </div>
+</div>

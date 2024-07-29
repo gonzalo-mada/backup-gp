@@ -1,0 +1,16 @@
+.error-icon {
+  color: var(--surface-600);
+}
+
+.error-title {
+  color: var(--surface-600);
+}
+
+.error-icon {
+  font-size: 7rem;
+  line-height: 1;
+}
+
+.error-title {
+  font-size: 2rem;
+}

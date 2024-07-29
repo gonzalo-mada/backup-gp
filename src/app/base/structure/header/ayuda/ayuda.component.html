@@ -1,0 +1,13 @@
+<app-contacto #contacto (onOpen)="showAyuda = false"></app-contacto>
+<app-simbologia #simbologia (onOpen)="showAyuda = false"></app-simbologia>
+
+<p-sidebar [(visible)]="showAyuda" position="right">
+  <ng-template pTemplate="header">
+    <span class="font-bold"> {{ "ayuda.titulo" | translate }}</span>
+  </ng-template>
+  <p-menu
+    #menuAyuda
+    [model]="ayudaButtons"
+    styleClass="menu-dtic no-border"
+  ></p-menu>
+</p-sidebar>

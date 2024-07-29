@@ -1,0 +1,135 @@
+body,
+html {
+  margin: 0px;
+  background: var(--surface-ground);
+}
+
+.bigCursor,
+.bigCursor * {
+  cursor: url(https://repositorio.uv.cl/imagenes/templateTheme/big_cursor.svg),
+    auto !important;
+}
+
+*:not(.pi):not(.fa),
+.p-inputtext {
+  font-family: "Nunito", sans-serif;
+}
+
+/* CUSTOM BADGE */
+.custom-badge {
+  border-radius: 4px;
+  padding: 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.custom-badge.danger {
+  background-color: #ffcdd2;
+  color: #c63737;
+}
+.custom-badge.success {
+  background-color: #c8e6c9;
+  color: #256029;
+}
+.custom-badge.info {
+  background-color: #b3e5fc;
+  color: #23547b;
+}
+.custom-badge.warning {
+  background-color: #ffd8b2;
+  color: #805b36;
+}
+
+.custom-badge.purple {
+  background-color: #e1cfe7;
+  color: #8a427a;
+}
+
+.custom-badge.gray {
+  background-color: #d5dfe4;
+  color: #5e6c77;
+}
+
+/* TABLE BOOTSTRAP */
+.table-bootstrap {
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  border-collapse: collapse;
+}
+.table-bootstrap .gray-cell {
+  background-color: var(--surface-b) !important;
+}
+.table-bootstrap thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+}
+.table-bootstrap td,
+.table-bootstrap th {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+
+.table-bootstrap-sm td,
+.table-bootstrap-sm th {
+  padding: 0.3rem;
+}
+
+.table-bootstrap-bordered td,
+.table-bootstrap-bordered th {
+  border: 1px solid #dee2e6;
+}
+
+.table-bootstrap-hover tr:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+/* CARD */
+.p-card {
+  box-shadow: none;
+  border-radius: 10px;
+}
+.p-card .p-card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.p-card .p-card-body {
+  height: 100%;
+}
+.p-card .p-card-content {
+  padding: unset;
+}
+
+/* PANEL */
+.p-panel-header {
+  padding: 0.7rem 1rem;
+  background-color: var(--gray-200);
+  color: var(--primary-color);
+}
+
+/* ACCORDION */
+.p-accordion .p-accordion-header .p-accordion-header-link {
+  padding: 0.7rem 1rem;
+}
+
+.p-accordion p-accordiontab .p-accordion-tab {
+  margin-bottom: 5px;
+}
+
+/* TABLE */
+.p-datatable .p-datatable-thead > tr > th {
+  background: var(--surface-b);
+}
+
+/* BREADCRUMB */
+.p-breadcrumb {
+  background-color: var(--surface-a);
+  border-radius: 10px;
+}
+
+/* DIVIDER */
+.p-divider-solid.p-divider-horizontal:before {
+  border-top-style: solid;
+}

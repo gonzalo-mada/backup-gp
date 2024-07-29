@@ -1,0 +1,301 @@
+{
+  "primeng": {
+    "startsWith": "Comience con",
+    "contains": "Contenga",
+    "notContains": "No contenga",
+    "endsWith": "Termine con",
+    "equals": "Igual a",
+    "notEquals": "Diferente a",
+    "noFilter": "Sin filtro",
+    "lt": "Menor que",
+    "lte": "Menor o igual a",
+    "gt": "Mayor que",
+    "gte": "Mayor o igual a",
+    "dateIs": "Fecha igual a",
+    "dateIsNot": "Fecha diferente a",
+    "dateBefore": "Fecha antes de",
+    "dateAfter": "Fecha después de",
+    "custom": "Personalizar",
+    "clear": "Limpiar",
+    "apply": "Aplicar",
+    "matchAll": "Coincidir todo",
+    "matchAny": "Coincidir con cualquiera",
+    "addRule": "Agregar regla",
+    "removeRule": "Eliminar regla",
+    "accept": "Sí",
+    "reject": "No",
+    "choose": "Escoger",
+    "upload": "Subir",
+    "cancel": "Cancelar",
+    "fileSizeTypes": ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
+    "dayNames": [
+      "Domingo",
+      "Lunes",
+      "Martes",
+      "Miércoles",
+      "Jueves",
+      "Viernes",
+      "Sábado"
+    ],
+    "dayNamesShort": ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
+    "dayNamesMin": ["D", "L", "M", "Mi", "J", "V", "S"],
+    "monthNames": [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre"
+    ],
+    "monthNamesShort": [
+      "Ene",
+      "Feb",
+      "Mar",
+      "Abr",
+      "May",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dic"
+    ],
+    "today": "Hoy",
+    "weekHeader": "Sem",
+    "firstDayOfWeek": 1,
+    "showMonthAfterYear": false,
+    "dateFormat": "dd/mm/yyyy",
+    "weak": "Débil",
+    "medium": "Medio",
+    "strong": "Fuerte",
+    "passwordPrompt": "Escriba una contraseña",
+    "emptyFilterMessage": "Sin opciones disponibles",
+    "emptyMessage": "No se han encontrado resultados",
+    "aria": {
+      "trueLabel": "Verdadero",
+      "falseLabel": "Falso",
+      "nullLabel": "No seleccionado",
+      "star": "1 estrella",
+      "stars": "{star} estrellas",
+      "selectAll": "Seleccionar todos",
+      "unselectAll": "Deseleccionar todos",
+      "close": "Cerrar",
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "navigation": "Navegación",
+      "scrollTop": "Desplazarse hacia arriba",
+      "moveTop": "Mover arriba",
+      "moveUp": "Subir",
+      "moveDown": "Bajar",
+      "moveBottom": "Desplazarse hacia abajo",
+      "moveToTarget": "Mover al objetivo",
+      "moveToSource": "Mover al origen",
+      "moveAllToTarget": "Mover todo al objetivo",
+      "moveAllToSource": "Mover todo al origen",
+      "pageLabel": "Página {page}",
+      "firstPageLabel": "Primera Página",
+      "lastPageLabel": "Última Página",
+      "nextPageLabel": "Siguiente Página",
+      "previousPageLabel": "Página Anterior",
+      "rowsPerPageLabel": "Filas por página",
+      "jumpToPageDropdownLabel": "Ir al menú desplegable de página",
+      "jumpToPageInputLabel": "Ir a la entrada de página",
+      "selectRow": "Seleccionar fila",
+      "unselectRow": "Desmarcar fila",
+      "expandRow": "Expandir Fila",
+      "collapseRow": "Reducir Fila",
+      "showFilterMenu": "Mostrar menú del filtro",
+      "hideFilterMenu": "Ocultar menú del filtro",
+      "filterOperator": "Operador de filtro",
+      "filterConstraint": "Restricción de filtro",
+      "editRow": "Editar fila",
+      "saveEdit": "Guardar editado",
+      "cancelEdit": "Cancelar editado",
+      "listView": "Vista de lista",
+      "gridView": "Vista de cuadrícula",
+      "slide": "Deslizar",
+      "slideNumber": "{slideNumber}",
+      "zoomImage": "Ampliar imagen",
+      "zoomIn": "Ampliar",
+      "zoomOut": "Reducir",
+      "rotateRight": "Girar a la derecha",
+      "rotateLeft": "Girar a la izquierda"
+    }
+  },
+  "loading": "Espere por favor...",
+  "authGuard": "No tienes permiso para ingresar. Contacta con el administrador del sistema.",
+  "idle": {
+    "title": "¿Estás ahí?",
+    "body": "¿Deseas más tiempo para navegar?",
+    "button": "Si por favor"
+  },
+  "idiomas": {
+    "titulo": "Idiomas",
+    "detalle": "Español activado",
+    "descripcion": "Puedes cambiar el idioma del sitio, siempre y cuando este habilitado y traducido."
+  },
+  "ayuda": {
+    "titulo": "Ayuda",
+    "contacto": {
+      "titulo": "Contacto",
+      "fields": {
+        "correo": "Correo",
+        "nombre": "Nombre",
+        "mensaje": "Mensaje"
+      },
+      "enviar": "Enviar",
+      "confirm": "¿Estás seguro de enviar el mensaje?",
+      "error": "Hubo un error al enviar tu contacto. Intente nuevamente.",
+      "success": "Correo enviado.",
+      "descripcion": "Escríbenos tus dudas, consultas y/o problemas que puedas tener con nuestros sistemas."
+    },
+    "simbologia": {
+      "titulo": "Simbología",
+      "descripcion": "Iconos y sus significados."
+    },
+    "manual": {
+      "titulo": "Manual de usuario",
+      "descripcion": "Documento descargable con los pasos del uso del sistema."
+    },
+    "descripcion": "Para dudas y/o consultas ofrecemos lo siguiente:"
+  },
+  "not_found": {
+    "titulo": "Página no disponible",
+    "body": "La página a la cual deseas ingresar no se encuentra disponible.<br/>Para dudas y/o consultas al respecto, favor escríbenos a <em>{{mail_soporte}}</em><br/>o a través del formulario de contacto."
+  },
+  "develop": {
+    "titulo_menu": "Página en construcción",
+    "body_menu": "La página se encuentra en desarrollo por parte de nuestro equipo.<br/>Para dudas y/o consultas al respecto, favor escríbenos a <em>{{mail_soporte}}</em><br/>o a través del formulario de contacto.",
+    "titulo_modulo": "Sitio en construcción",
+    "body_modulo": "El sitio se encuentra en desarrollo por parte de nuestro equipo.<br/>Para dudas y/o consultas al respecto, favor escríbenos a <em>{{mail_soporte}}</em><br/>o a través del formulario de contacto."
+  },
+  "maintenance": {
+    "titulo_menu": "Página en mantención",
+    "body_menu": "La página se encuentra en mantenimiento técnico.<br/>Para dudas y/o consultas al respecto, favor escríbenos a <em>{{mail_soporte}}</em><br/>o a través del formulario de contacto.",
+    "titulo_modulo": "Sitio en mantención",
+    "body_modulo": "El sitio se encuentra en mantenimiento técnico.<br/>Para dudas y/o consultas al respecto, favor escríbenos a <em>{{mail_soporte}}</em><br/>o a través del formulario de contacto."
+  },
+  "sesion": {
+    "titulo": "Sesión de usuario",
+    "body": "Tu sesión actual ha expirado o ha ocurrido un error con esta. Te recomendamos ingresar nuevamente al sistema.<br/>Para dudas y/o consultas al respecto, favor escríbenos a <em>{{mail_soporte}}</em><br/>o a través del formulario de contacto."
+  },
+  "init": {
+    "titulo": "Inicio sistema",
+    "error_init": "Ha ocurrido un error al iniciar el sistema.",
+    "error_startservice": "Ha ocurrido un error al iniciar los servicios."
+  },
+  "error": {
+    "titulo": "Ooops error",
+    "body": "Lo sentimos: ha ocurrido un error en el sistema.<br/>Para dudas y/o consultas al respecto, favor escríbenos a <em>{{mail_soporte}}</em><br/>o a través del formulario de contacto.",
+    "detalle": "Detalle",
+    "nivel": "Nivel",
+    "capa": "Capa",
+    "codigo": "Código",
+    "tipo": "Tipo",
+    "path": "Ruta",
+    "nombre": "Nombre",
+    "mensaje": "Mensaje"
+  },
+  "home": "Volver al inicio",
+  "sistemas": {
+    "titulo": "Mis sistemas",
+    "descripcion": "Navega entre los variados sistemas y portales que dispones:",
+    "modulos": {
+      "titulo": "Sistemas",
+      "error_get": "Ha ocurrido un error al obtener tus sistemas.",
+      "error_navigate": "Ha ocurrido un error al ingresar al sistema. Intente nuevamente.",
+      "maintenance_navigate": "El sistema al cual deseas ingresar está en mantención.",
+      "develop_navigate": "El sistema al cual deseas ingresar está en construcción.",
+      "descripcion": "Lista de sistemas a los cuales tienes acceso según tus permisos. Los sistemas listados corresponden al Portal por el cual has ingresado."
+    },
+    "aplicaciones": {
+      "titulo": "Portales",
+      "error_get": "Ha ocurrido un error al obtener tus Portales.",
+      "error_navigate": "Ha ocurrido un error al ingresar al Portal. Intente nuevamente.",
+      "descripcion": "Lista de portales a los cuales tienes acceso según tus permisos. Cada portal posee sus propios sistemas."
+    }
+  },
+  "menus": {
+    "titulo": "Navegación",
+    "error_get": "Ha ocurrido un error al obtener el menú de navegación.",
+    "error_navigate": "Ha ocurrido un error al navegar en el sistema. Intente nuevamente.",
+    "filter": "Filtrar",
+    "empty": "Sin resultados",
+    "descripcion": "Puedes acceder a los distintas secciones que ofrece el sistema."
+  },
+  "avisos": {
+    "titulo": "Avisos",
+    "empty": "Sin avisos",
+    "ver": "Haz clic para ver más detalles",
+    "descripcion": "Alertas sobre eventualidades en la UV y/o en nuestros sistemas."
+  },
+  "portal": {
+    "titulo": "Volver al Portal",
+    "error_navigate": "Ha ocurrido un error al volver al Portal. Intente nuevamente.",
+    "descripcion": "Puedes regresar al Portal por el cual ingresaste en cualquier momento."
+  },
+  "mi_cuenta": {
+    "titulo": "Mi cuenta",
+    "descripcion": "En tu cuenta de usuario, te ofrecemos:",
+    "profile": {
+      "titulo": "Mi cuenta",
+      "descripcion": "Tarjeta de presentación."
+    },
+    "correo": {
+      "titulo": "Mi correo UV",
+      "descripcion": "Ingresa a tu correo institucional de manera más rápida."
+    },
+    "cambiaclave": {
+      "titulo": "Cambia Clave",
+      "descripcion": "Puedes cambiar o recuperar información de tu cuenta institucional como tu clave de acceso, correo personal, etc."
+    },
+    "logout": {
+      "titulo": "Cerrar sesión",
+      "descripcion": "Finaliza tu actual sesión."
+    },
+    "login": {
+      "titulo": "Iniciar sesión"
+    }
+  },
+  "theme": {
+    "titulo": "Accesibilidad",
+    "tema": {
+      "title": "Tema",
+      "light": "Claro",
+      "dark": "Oscuro"
+    },
+    "fontsize": {
+      "title": "Tamaño fuente"
+    },
+    "cursorsize": {
+      "title": "Tamaño cursor",
+      "normal": "Normal",
+      "grande": "Grande"
+    }
+  },
+  "logout": {
+    "titulo": "Salir",
+    "detalle": "¿Deseas cerrar la sesión actual?"
+  },
+  "form": {
+    "field_required": "(*) Campos obligatorios",
+    "required": "Campo obligatorio",
+    "pattern": "Campo inválido",
+    "email": "Correo inválido",
+    "maxlength": "Largo máx inválido",
+    "minlength": "Largo mín inválido",
+    "min": "Valor mín inválido",
+    "max": "Valor máx inválido",
+    "empty": "Campo obligatorio",
+    "valid": "Formulario válido",
+    "invalid": "Formulario inválido",
+    "rut": "Rut inválido"
+  }
+}

@@ -1,0 +1,26 @@
+<p-card>
+  <div class="flex justify-content-center align-content-center flex-wrap mt-3">
+    <div class="grid text-center">
+      <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 error-icon">
+        404
+      </div>
+      <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 error-title">
+        {{ "not_found.titulo" | translate }}
+      </div>
+      <div
+        class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 mt-2"
+        [innerHTML]="
+          'not_found.body' | translate: { mail_soporte: mail_soporte }
+        "
+      ></div>
+      <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 mt-3">
+        <p-button
+          label="{{ 'home' | translate }}"
+          [icon]="homeIcon"
+          styleClass="p-button-lg"
+          (click)="goHome()"
+        ></p-button>
+      </div>
+    </div>
+  </div>
+</p-card>

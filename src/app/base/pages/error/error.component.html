@@ -1,0 +1,71 @@
+<p-card>
+  <ng-container *ngIf="state">
+    <div
+      class="flex justify-content-center align-content-center flex-wrap mt-3"
+    >
+      <div class="grid text-center">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 error-icon">
+          <i class="{{ icons.error_page }}"></i>
+        </div>
+        <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 error-title">
+          {{ "error.titulo" | translate }}
+        </div>
+        <div
+          class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 mt-2"
+          [innerHTML]="'error.body' | translate: { mail_soporte: mail_soporte }"
+        ></div>
+      </div>
+    </div>
+    <div class="grid mt-3">
+      <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+        <table
+          class="table-bootstrap table-bootstrap-sm table-bootstrap-bordered mb-0"
+        >
+          <tbody>
+            <tr>
+              <td class="title-cell gray-cell text-center" colspan="2">
+                {{ "error.detalle" | translate }}
+              </td>
+            </tr>
+            <tr>
+              <td class="title-cell gray-cell">
+                {{ "error.nombre" | translate }}
+              </td>
+              <td class="text-right">{{ state.error.name }}</td>
+            </tr>
+            <tr>
+              <td class="title-cell gray-cell">
+                {{ "error.tipo" | translate }}
+              </td>
+              <td class="text-right">{{ state.error.type }}</td>
+            </tr>
+            <tr>
+              <td class="title-cell gray-cell">
+                {{ "error.nivel" | translate }}
+              </td>
+              <td class="text-right">{{ state.error.level }}</td>
+            </tr>
+            <tr>
+              <td class="title-cell gray-cell">
+                {{ "error.path" | translate }}
+              </td>
+              <td class="text-right">{{ state.router }}</td>
+            </tr>
+            <tr>
+              <td class="title-cell gray-cell" colspan="2">
+                {{ "error.mensaje" | translate }}
+              </td>
+            </tr>
+            <tr>
+              <td
+                colspan="2"
+                [innerHTML]="state.error.message"
+                style="word-break: break-word"
+              ></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+</p-card>

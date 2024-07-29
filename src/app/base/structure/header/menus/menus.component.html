@@ -1,0 +1,11 @@
+<p-sidebar [(visible)]="showMenus" position="left">
+  <ng-template pTemplate="header">
+    <span class="font-bold">{{ "menus.titulo" | translate }}</span>
+  </ng-template>
+
+  <p-panelMenu
+    [model]="menus"
+    [multiple]="true"
+    styleClass="panelMenu-dtic {{ theme }}"
+  ></p-panelMenu>
+</p-sidebar>

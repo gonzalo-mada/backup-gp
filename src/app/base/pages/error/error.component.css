@@ -1,0 +1,10 @@
+.no-disabled {
+  opacity: 1 !important;
+}
+
+.title-cell {
+  width: 90px;
+}
+.gray-cell {
+  background-color: #efefef;
+}

@@ -1,0 +1,17 @@
+<app-main-loading></app-main-loading>
+<app-loading></app-loading>
+<app-back-to-portal></app-back-to-portal>
+<app-idle *ngIf="!blocking_session"></app-idle>
+
+<p-toast [baseZIndex]="5000" key="main"></p-toast>
+<app-header
+  *ngIf="usuario"
+  [blocking]="blocking"
+  [blocking_session]="blocking_session"
+></app-header>
+<div class="main-container">
+  <app-breadcrumb></app-breadcrumb>
+  <router-outlet></router-outlet>
+  <p-scrollTop></p-scrollTop>
+</div>
+<app-footer></app-footer>

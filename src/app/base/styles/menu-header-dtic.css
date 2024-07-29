@@ -1,0 +1,40 @@
+.panelMenu-dtic .p-panelmenu-header .p-panelmenu-header-content {
+  border-radius: 4px;
+}
+
+.panelMenu-dtic
+  .p-panelmenu-header.active
+  .p-panelmenu-header-content
+  .p-panelmenu-header-action {
+  color: var(--primary-color) !important;
+}
+
+.panelMenu-dtic
+  .p-panelmenu-header
+  .p-panelmenu-header-content
+  .p-panelmenu-header-action {
+  font-weight: normal !important;
+}
+
+.panelMenu-dtic.no-subpanel-padding
+  .p-panelmenu-content
+  .p-submenu-list:not(.p-panelmenu-root-submenu) {
+  padding: 0px;
+}
+
+.panelMenu-dtic .p-panelmenu-content {
+  border: none;
+}
+
+.menu-dtic {
+  width: 100%;
+}
+
+.menu-dtic.no-border {
+  border: none;
+}
+
+.menu-dtic.p-menu .p-menuitem-link,
+.menu-dtic.p-menu .p-menuitem > .p-menuitem-content {
+  border-radius: 4px !important;
+}

@@ -1,0 +1,18 @@
+<div class="footer pt-2 mb-2 text-sm">
+  <div
+    class="flex align-items-center align-content-center flex-wrap justify-content-center pb-2"
+  >
+    <div class="hidden md:inline pr-2">
+      <img [src]="logouv" alt="logo_uv" height="50" class="logo-uv" />
+    </div>
+    <div class="flex flex-column align-items-center md:align-items-start">
+      {{ title }}
+      <div>
+        <a class="link-footer" [href]="building.url" target="_blank">{{
+          building.name
+        }}</a>
+      </div>
+      <div class="hidden md:inline text-xs">v{{ version }}</div>
+    </div>
+  </div>
+</div>

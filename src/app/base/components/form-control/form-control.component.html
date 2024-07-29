@@ -1,0 +1,12 @@
+<small
+  class="p-error"
+  *ngIf="
+    show && control && control.invalid && (control.dirty || control.touched)
+  "
+>
+  <div class="flex flex-column gap-1 mt-1">
+    <ng-container *ngFor="let val of validators">
+      <span *ngIf="control.errors[val]">{{ msgs[val] }}</span>
+    </ng-container>
+  </div>
+</small>

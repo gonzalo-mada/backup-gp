@@ -1,0 +1,10 @@
+[
+  "tokenError",
+  "JsonWebTokenError",
+  "Datos de sesión",
+  "parámetro idSesion",
+  "jwt expired",
+  "Usuario no registrado",
+  "Invalid Credentials",
+  "NO TOKEN"
+]

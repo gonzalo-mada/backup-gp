@@ -1,0 +1,111 @@
+<p-confirmDialog
+  [baseZIndex]="10000"
+  [closable]="false"
+  [style]="{ width: '300px' }"
+  key="contacto"
+>
+</p-confirmDialog>
+
+<p-dialog
+  header="{{ 'ayuda.contacto.titulo' | translate }}"
+  [(visible)]="show"
+  [modal]="true"
+  [style]="{ width: '40vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  position="top"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+>
+  <ng-container *ngIf="form && usuario">
+    <form [formGroup]="form">
+      <div class="grid">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 text-center">
+          <app-form-isvalid [valid]="form.valid"></app-form-isvalid>
+        </div>
+        <div
+          class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12"
+          *ngIf="usuario.anonimo"
+        >
+          <div class="field">
+            <label>Rut *</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="rut"
+              class="w-full"
+              placeholder="12345678-9"
+            />
+            <app-form-control
+              [control]="form.controls['rut']"
+              [validators]="['required', 'empty', 'rut']"
+            ></app-form-control>
+          </div>
+        </div>
+        <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+          <div class="field">
+            <label>{{ "ayuda.contacto.fields.nombre" | translate }} *</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="nombre"
+              class="w-full"
+            />
+            <app-form-control
+              [control]="form.controls['nombre']"
+              [validators]="['required', 'empty']"
+            ></app-form-control>
+          </div>
+        </div>
+        <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+          <div class="field">
+            <label>{{ "ayuda.contacto.fields.correo" | translate }} *</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="correo"
+              class="w-full"
+            />
+            <app-form-control
+              [control]="form.controls['correo']"
+              [validators]="['required', 'empty', 'email']"
+            ></app-form-control>
+          </div>
+        </div>
+        <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+          <div class="field">
+            <label>{{ "ayuda.contacto.fields.mensaje" | translate }} *</label>
+            <textarea
+              pInputTextarea
+              formControlName="mensaje"
+              rows="5"
+              cols="30"
+              class="w-full"
+            ></textarea>
+            <app-form-control
+              [control]="form.controls['mensaje']"
+              [validators]="['required', 'empty']"
+            ></app-form-control>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      label="{{ 'primeng.aria.close' | translate }}"
+      icon="pi pi-times"
+      styleClass="p-button-secondary"
+      (click)="show = false"
+      [text]="true"
+      size="small"
+    ></p-button>
+    <p-button
+      label="{{ 'ayuda.contacto.enviar' | translate }}"
+      icon="pi pi-check"
+      size="small"
+      [disabled]="!form.valid"
+      (click)="form.valid && sendMail()"
+    ></p-button>
+  </ng-template>
+</p-dialog>

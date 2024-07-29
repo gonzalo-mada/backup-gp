@@ -1,0 +1,13 @@
+.main-container {
+  min-height: calc(100vh - 80px);
+  padding: 5.4rem 15px 1rem 15px;
+}
+
+@media screen and (max-width: 768px) {
+  .main-container {
+    padding-top: 5rem;
+    padding-left: 8px;
+    padding-right: 8px;
+    min-height: calc(100vh - 55px);
+  }
+}

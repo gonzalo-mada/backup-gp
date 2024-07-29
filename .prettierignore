@@ -1,0 +1,13 @@
+node_modules
+dist
+e2e
+# src/app/base
+# src/assets/i18n/base
+# src/assets/themes
+.vscode
+.angular
+.vscode
+.browserslistrc
+.prettierrc.json
+.package-lock.json
+.editorconfig

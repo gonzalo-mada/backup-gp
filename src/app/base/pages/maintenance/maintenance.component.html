@@ -1,0 +1,44 @@
+<p-card>
+  <div
+    class="flex justify-content-center align-content-center flex-wrap mt-3"
+    *ngIf="state"
+  >
+    <div class="grid text-center">
+      <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 error-icon">
+        <i class="{{ icons.maintenance_page }}"></i>
+      </div>
+      <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 error-title">
+        {{
+          (state.mode === "menu"
+            ? "maintenance.titulo_menu"
+            : "maintenance.titulo_modulo"
+          ) | translate
+        }}
+      </div>
+      <div
+        class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 mt-2"
+        [innerHTML]="
+          (state.mode === 'menu'
+            ? 'maintenance.body_menu'
+            : 'maintenance.body_modulo'
+          ) | translate: { mail_soporte: mail_soporte }
+        "
+      ></div>
+      <div
+        class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 mt-3"
+        *ngIf="showBack"
+      >
+        <p-button styleClass="p-button-lg" (click)="goBack()">
+          <div>
+            <i
+              class="{{
+                state.mode === 'menu' ? icons.home : icons.portal
+              }} mr-2"
+            ></i>
+            {{ (state.mode === "menu" ? "home" : "portal.titulo") | translate }}
+          </div>
+        </p-button>
+      </div>
+    </div>
+  </div>
+</p-card>

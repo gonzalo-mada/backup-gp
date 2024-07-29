@@ -1,0 +1,161 @@
+<p-sidebar [(visible)]="showTemas" position="right">
+  <ng-template pTemplate="header">
+    <span class="font-bold"> {{ "theme.titulo" | translate }}</span>
+  </ng-template>
+
+  <div class="grid">
+    <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+      <i class="fa-solid fa-circle-half-stroke"></i>
+      {{ "theme.tema.title" | translate }}
+      <div class="grid mt-2">
+        <ng-container *ngFor="let t of themes">
+          <div
+            class="col-6 sm:col-6 md:col-6 lg:col-6 xl:col-6 theme-box {{
+              theme
+            }}"
+            (click)="selectTheme(t)"
+          >
+            <img
+              class="w-full"
+              src="https://repositorio.uv.cl/imagenes/templateTheme/{{ t }}.png"
+            />
+            <div class="flex align-items-center">
+              <p-radioButton
+                name="tema"
+                value="{{ t }}"
+                [(ngModel)]="theme"
+                (onClick)="selectTheme(t)"
+              ></p-radioButton>
+              <label class="ml-2">{{ "theme.tema." + t | translate }}</label>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+      <hr />
+    </div>
+    <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+      <i class="fa-solid fa-font"></i>
+      {{ "theme.fontsize.title" | translate }}
+      <div class="flex align-items-center gap-2 py-1 px-2 w-full mt-2">
+        <button
+          (click)="changeFontsize(-1)"
+          [disabled]="font === fontSize_min"
+          icon="pi pi-minus"
+          type="button"
+          pbutton=""
+          class="p-element p-button-text p-button-rounded w-2rem h-2rem p-button p-component p-button-icon-only"
+        >
+          <span class="p-button-icon pi pi-minus" aria-hidden="true"></span>
+        </button>
+        <div class="flex gap-2 align-items-center">
+          <ng-container *ngFor="let fs of fontSize_position">
+            <i
+              class="pi pi-circle-fill text-sm text-200 {{
+                fs === font ? 'text-lg text-primary' : ''
+              }} fs-circle"
+              (click)="selectFontsize(fs)"
+            ></i>
+          </ng-container>
+        </div>
+        <button
+          (click)="changeFontsize(1)"
+          [disabled]="font === fontSize_max"
+          icon="pi pi-plus"
+          type="button"
+          pbutton=""
+          class="p-element p-button-text p-button-rounded w-2rem h-2rem p-button p-component p-button-icon-only"
+        >
+          <span class="p-button-icon pi pi-plus" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+      <hr />
+    </div>
+    <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+      <i class="fa-solid fa-arrow-pointer"></i>
+      {{ "theme.cursorsize.title" | translate }}
+      <div class="grid mt-2">
+        <div class="col-6 sm:col-6 md:col-6 lg:col-6 xl:col-6">
+          <div
+            class="flex align-items-center p-2 theme-box {{ theme }}"
+            (click)="changeCursorSize('normal')"
+          >
+            <p-radioButton
+              name="cursor"
+              value="normal"
+              [(ngModel)]="cursorSize"
+            ></p-radioButton>
+            <label class="ml-2">{{
+              "theme.cursorsize.normal" | translate
+            }}</label>
+          </div>
+        </div>
+        <div class="col-6 sm:col-6 md:col-6 lg:col-6 xl:col-6">
+          <div
+            class="flex align-items-center p-2 theme-box {{ theme }}"
+            (click)="changeCursorSize('big')"
+          >
+            <p-radioButton
+              name="cursor"
+              value="big"
+              [(ngModel)]="cursorSize"
+            ></p-radioButton>
+            <label class="ml-2">{{
+              "theme.cursorsize.grande" | translate
+            }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="langActive">
+      <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+        <hr />
+      </div>
+      <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+        <i class="fa-solid fa-language"></i>
+        {{ "idiomas.titulo" | translate }}
+        <div class="grid mt-2">
+          <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+            <p-dropdown
+              appendTo="body"
+              [options]="langs"
+              [(ngModel)]="lang"
+              styleClass="w-full"
+              (onChange)="changeLang($event)"
+              optionValue="code"
+              optionLabel="lang"
+            >
+              <ng-template pTemplate="selectedItem">
+                <div class="flex align-items-center gap-2" *ngIf="lang">
+                  <img
+                    src="https://repositorio.uv.cl/imagenes/idiomas/{{
+                      langSelected.code
+                    }}.png"
+                  />
+                  <div>
+                    {{ langSelected.lang }}
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template let-lg pTemplate="item">
+                <div class="flex align-items-center gap-2">
+                  <img
+                    src="https://repositorio.uv.cl/imagenes/idiomas/{{
+                      lg.code
+                    }}.png"
+                  />
+                  <div>
+                    {{ lg.lang }}
+                  </div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</p-sidebar>

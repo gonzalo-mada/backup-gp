@@ -1,0 +1,102 @@
+<p-confirmDialog key="logout"></p-confirmDialog>
+
+<app-temas #temas></app-temas>
+<ng-container *ngIf="!blocking_session">
+  <app-mi-cuenta #miCuenta></app-mi-cuenta>
+  <app-ayuda #ayuda></app-ayuda>
+  <app-sistemas #sistemas></app-sistemas>
+  <app-menus #menus></app-menus>
+  <app-avisos #avisos (onCount)="avisos_count = $event"></app-avisos>
+</ng-container>
+
+<p-toolbar styleClass="main-toolbar">
+  <div class="p-toolbar-group-start gap-2">
+    <p-button
+      styleClass="button-header"
+      [text]="true"
+      [title]="'menus.titulo' | translate"
+      (click)="showMenus()"
+      *ngIf="showMenus_b && !blocking && !blocking_session"
+    >
+      <div><i class="{{ icons.menus }}"></i></div>
+    </p-button>
+    <div class="hidden md:inline-flex">
+      <span class="sitename">
+        {{ title }}
+      </span>
+    </div>
+  </div>
+  <div class="p-toolbar-group-end gap-2">
+    <p-button
+      styleClass="button-header"
+      [text]="true"
+      [title]="'portal.titulo' | translate"
+      (click)="goBackPortal()"
+      *ngIf="showVolverPortal_b && !blocking_session && isToken"
+    >
+      <div class="flex align-items-center">
+        <div class="hidden lg:block">
+          <i class="{{ icons.portal }} mr-1"></i>Portal
+        </div>
+        <div class="block lg:hidden">
+          <i class="{{ icons.portal }}"></i>
+        </div>
+      </div>
+    </p-button>
+
+    <p-button
+      styleClass="button-header"
+      [text]="true"
+      [title]="'avisos.titulo' | translate"
+      (click)="showAvisos()"
+      *ngIf="showAvisos_b && !blocking_session && isToken"
+    >
+      <div class="flex align-items-center">
+        <i
+          class="{{ icons.avisos }} {{ avisos_count > 0 ? 'fa-shake' : '' }}"
+          style="--fa-animation-duration: 3s"
+        ></i
+        ><span *ngIf="avisos_count > 0" class="ml-1">{{ avisos_count }}</span>
+      </div>
+    </p-button>
+
+    <p-button
+      styleClass="button-header"
+      [text]="true"
+      (click)="showTheme()"
+      [title]="'theme.titulo' | translate"
+      *ngIf="showTheme_b"
+      [icon]="icons.theme"
+    >
+    </p-button>
+
+    <p-button
+      styleClass="button-header"
+      [text]="true"
+      (click)="showAyuda()"
+      [title]="'ayuda.titulo' | translate"
+      *ngIf="showAyuda_b && !blocking_session"
+      [icon]="icons.ayuda"
+    >
+    </p-button>
+
+    <p-button
+      styleClass="button-header"
+      [text]="true"
+      (click)="showSistemas()"
+      [title]="'sistemas.titulo' | translate"
+      *ngIf="showSistemas_b && !blocking && !blocking_session && isToken"
+      [icon]="icons.sistemas"
+    >
+    </p-button>
+
+    <p-avatar
+      [image]="usuario.foto"
+      styleClass="mi-cuenta-foto"
+      shape="circle"
+      [title]="'mi_cuenta.titulo' | translate"
+      (click)="showMiCuenta()"
+      *ngIf="showMiCuenta_b && !blocking_session"
+    ></p-avatar>
+  </div>
+</p-toolbar>

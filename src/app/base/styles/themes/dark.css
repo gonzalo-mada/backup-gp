@@ -1,0 +1,22 @@
+/* TemasComponent */
+
+.theme-box.dark:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Menu Primeng - Custom DTIC */
+
+.panelMenu-dtic.dark .p-panelmenu-header .p-panelmenu-header-content,
+.p-submenu-list .p-menuitem .p-menuitem-content .p-menuitem-link {
+  background: none !important;
+  border: none;
+}
+
+.panelMenu-dtic.dark .p-panelmenu-header.active .p-panelmenu-header-content,
+.p-submenu-list .p-menuitem.active .p-menuitem-content .p-menuitem-link {
+  background: #d6eaff45 !important;
+}
+
+.panelMenu-dtic.dark .p-panelmenu-header .p-panelmenu-header-content:hover {
+  background: rgba(255, 255, 255, 0.04) !important;
+}

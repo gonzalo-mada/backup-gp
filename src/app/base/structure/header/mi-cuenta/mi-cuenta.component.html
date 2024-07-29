@@ -1,0 +1,39 @@
+<p-sidebar [(visible)]="showMiCuenta" position="right">
+  <ng-template pTemplate="header">
+    <span class="font-bold">{{ "mi_cuenta.titulo" | translate }}</span>
+  </ng-template>
+
+  <div class="grid mb-2" *ngIf="usuario && show.profile">
+    <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 text-center">
+      <img
+        [src]="usuario.foto"
+        [alt]="usuario.rut"
+        class="profile-photo shadow-4"
+      />
+    </div>
+    <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 text-center">
+      <span class="font-bold">{{ usuario.nombre_completo }}</span
+      ><br />
+      <em>{{ usuario.rut }}</em
+      ><br />
+      {{ usuario.correo_uv }}
+    </div>
+  </div>
+
+  <p-menu
+    [model]="miCuentaButtons"
+    styleClass="menu-dtic no-border"
+    *ngIf="showMiCuenta"
+  ></p-menu>
+
+  <p-button
+    styleClass="p-button-danger mt-4 w-full"
+    *ngIf="show.logout && isToken"
+    (click)="logout()"
+  >
+    <div>
+      <i class="{{ icon_logout }} mr-2"></i>
+      {{ "mi_cuenta.logout.titulo" | translate }}
+    </div>
+  </p-button>
+</p-sidebar>

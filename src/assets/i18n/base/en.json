@@ -1,0 +1,325 @@
+{
+  "primeng": {
+    "startsWith": "Starts with",
+    "contains": "Contains",
+    "notContains": "Not contains",
+    "endsWith": "Ends with",
+    "equals": "Equals",
+    "notEquals": "Not equals",
+    "noFilter": "No Filter",
+    "filter": "Filter",
+    "lt": "Less than",
+    "lte": "Less than or equal to",
+    "gt": "Greater than",
+    "gte": "Greater than or equal to",
+    "dateIs": "Date is",
+    "dateIsNot": "Date is not",
+    "dateBefore": "Date is before",
+    "dateAfter": "Date is after",
+    "custom": "Custom",
+    "clear": "Clear",
+    "apply": "Apply",
+    "matchAll": "Match All",
+    "matchAny": "Match Any",
+    "addRule": "Add Rule",
+    "removeRule": "Remove Rule",
+    "accept": "Yes",
+    "reject": "No",
+    "choose": "Choose",
+    "upload": "Upload",
+    "cancel": "Cancel",
+    "completed": "Completed",
+    "pending": "Pending",
+    "fileSizeTypes": ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
+    "dayNames": [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    "dayNamesShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "dayNamesMin": ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+    "monthNames": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    "monthNamesShort": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ],
+    "chooseYear": "Choose Year",
+    "chooseMonth": "Choose Month",
+    "chooseDate": "Choose Date",
+    "prevDecade": "Previous Decade",
+    "nextDecade": "Next Decade",
+    "prevYear": "Previous Year",
+    "nextYear": "Next Year",
+    "prevMonth": "Previous Month",
+    "nextMonth": "Next Month",
+    "prevHour": "Previous Hour",
+    "nextHour": "Next Hour",
+    "prevMinute": "Previous Minute",
+    "nextMinute": "Next Minute",
+    "prevSecond": "Previous Second",
+    "nextSecond": "Next Second",
+    "am": "AM",
+    "pm": "PM",
+    "today": "Today",
+    "weekHeader": "Wk",
+    "firstDayOfWeek": 0,
+    "showMonthAfterYear": false,
+    "dateFormat": "mm/dd/yy",
+    "weak": "Weak",
+    "medium": "Medium",
+    "strong": "Strong",
+    "passwordPrompt": "Enter a password",
+    "emptyFilterMessage": "No results found",
+    "searchMessage": "{0} results are available",
+    "selectionMessage": "{0} items selected",
+    "emptySelectionMessage": "No selected item",
+    "emptySearchMessage": "No results found",
+    "emptyMessage": "No available options",
+    "aria": {
+      "trueLabel": "True",
+      "falseLabel": "False",
+      "nullLabel": "Not Selected",
+      "star": "1 star",
+      "stars": "{star} stars",
+      "selectAll": "All items selected",
+      "unselectAll": "All items unselected",
+      "close": "Close",
+      "previous": "Previous",
+      "next": "Next",
+      "navigation": "Navigation",
+      "scrollTop": "Scroll Top",
+      "moveTop": "Move Top",
+      "moveUp": "Move Up",
+      "moveDown": "Move Down",
+      "moveBottom": "Move Bottom",
+      "moveToTarget": "Move to Target",
+      "moveToSource": "Move to Source",
+      "moveAllToTarget": "Move All to Target",
+      "moveAllToSource": "Move All to Source",
+      "pageLabel": "Page {page}",
+      "firstPageLabel": "First Page",
+      "lastPageLabel": "Last Page",
+      "nextPageLabel": "Next Page",
+      "previousPageLabel": "Previous Page",
+      "rowsPerPageLabel": "Rows per page",
+      "jumpToPageDropdownLabel": "Jump to Page Dropdown",
+      "jumpToPageInputLabel": "Jump to Page Input",
+      "selectRow": "Row Selected",
+      "unselectRow": "Row Unselected",
+      "expandRow": "Row Expanded",
+      "collapseRow": "Row Collapsed",
+      "showFilterMenu": "Show Filter Menu",
+      "hideFilterMenu": "Hide Filter Menu",
+      "filterOperator": "Filter Operator",
+      "filterConstraint": "Filter Constraint",
+      "editRow": "Edit Row",
+      "saveEdit": "Save Edit",
+      "cancelEdit": "Cancel Edit",
+      "listView": "List View",
+      "gridView": "Grid View",
+      "slide": "Slide",
+      "slideNumber": "{slideNumber}",
+      "zoomImage": "Zoom Image",
+      "zoomIn": "Zoom In",
+      "zoomOut": "Zoom Out",
+      "rotateRight": "Rotate Right",
+      "rotateLeft": "Rotate Left"
+    }
+  },
+  "loading": "Please wait...",
+  "authGuard": "You don't have permission to enter. Contact the system administrator.",
+  "idle": {
+    "title": "Are you there?",
+    "body": "Do you want more time to navigate?",
+    "button": "Yes please"
+  },
+  "idiomas": {
+    "titulo": "Languages",
+    "detalle": "English activated",
+    "descripcion": "You can change the language of the site, as long as it is enabled and translated."
+  },
+  "ayuda": {
+    "titulo": "Help",
+    "contacto": {
+      "titulo": "Contact",
+      "fields": {
+        "correo": "Email",
+        "nombre": "Name",
+        "mensaje": "Message"
+      },
+      "enviar": "Send",
+      "confirm": "Are you sure to send the message?",
+      "error": "There was an error sending your contact. Try again.",
+      "success": "Email send.",
+      "descripcion": "Write us your doubts, queries and/or problems you may have with our systems."
+    },
+    "simbologia": {
+      "titulo": "Simbology",
+      "descripcion": "Icons and their meanings."
+    },
+    "manual": {
+      "titulo": "User manual",
+      "descripcion": "Downloadable document with the steps for using the system."
+    },
+    "descripcion": "For doubts and/or queries we offer the following:"
+  },
+  "not_found": {
+    "titulo": "Page not found",
+    "body": "The page you want to access is not found.<br/> For questions, please contact us at email <em>{{mail_soporte}}</em><br/>or through the contact form."
+  },
+  "develop": {
+    "titulo_menu": "Page under contruction",
+    "body_menu": "The page is under development by our team.<br/> For questions, please contact us at email <em>{{mail_soporte}}</em><br/>or through the contact form.",
+    "titulo_modulo": "Site under contruction",
+    "body_modulo": "The site is under development by our team.<br/> For questions, please contact us at email <em>{{mail_soporte}}</em><br/>or through the contact form."
+  },
+  "maintenance": {
+    "titulo_menu": "Página under maintenance",
+    "body_menu": "The page is under technical maintenance.<br/> For questions, please contact us at email <em>{{mail_soporte}}</em><br/>or through the contact form.",
+    "titulo_modulo": "Site under maintenance",
+    "body_modulo": "The site is under technical maintenance.<br/> For questions, please contact us at email <em>{{mail_soporte}}</em><br/>or through the contact form."
+  },
+  "sesion": {
+    "titulo": "User session",
+    "body": "Your current session has expired or an error has occurred with it. We recommend that you log in again to the system..<br/> For questions, please contact us at email <em>{{mail_soporte}}</em><br/>or through the contact form."
+  },
+  "init": {
+    "titulo": "System start",
+    "error_init": "An error occurred while starting the system.",
+    "error_startservice": "An error occurred while starting services."
+  },
+  "error": {
+    "titulo": "Ooops error",
+    "body": "We apologize. An error has ocurred in the system.<br/> For questions, please contact us at email <em>{{mail_soporte}}</em><br/>or through the contact form.",
+    "detalle": "Detail",
+    "nivel": "Level",
+    "capa": "Layer",
+    "codigo": "Code",
+    "tipo": "Type",
+    "path": "Path",
+    "nombre": "Name",
+    "mensaje": "Message"
+  },
+  "home": "Back to home",
+  "sistemas": {
+    "titulo": "My systems",
+    "descripcion": "Browse between the various systems and portals you have:",
+    "modulos": {
+      "titulo": "Systems",
+      "error_get": "An error occurred while obtaining your systems.",
+      "error_navigate": "An error has occurred while entering the system. Try again.",
+      "maintenance_navigate": "The system you wish to enter is under maintenance.",
+      "develop_navigate": "The system you want to enter is under construction.",
+      "descripcion": "List of systems to which you have access according to your permissions. The systems listed correspond to the Portal through which you have entered."
+    },
+    "aplicaciones": {
+      "titulo": "Portals",
+      "error_get": "An error occurred while obtaining your Portals.",
+      "error_navigate": "An error has occurred while entering the Portal. Try again.",
+      "descripcion": "List of portals to which you have access according to your permissions. Each portal has its own systems."
+    }
+  },
+  "menus": {
+    "titulo": "Navigation",
+    "error_get": "An error occurred while obtaining the navigation menu.",
+    "error_navigate": "An error occurred while navigating the system. Try again.",
+    "filter": "Filter",
+    "empty": "No results",
+    "descripcion": "You can access the different sections offered by the system."
+  },
+  "avisos": {
+    "titulo": "Alerts",
+    "empty": "No alerts",
+    "ver": "Click to see more details",
+    "descripcion": "Alerts about eventualities in the UV and/or in our systems."
+  },
+  "portal": {
+    "titulo": "Go back to Portal",
+    "error_navigate": "An error occurred while returning to the Portal. Try again.",
+    "descripcion": "You can return to the Portal through which you entered at any time."
+  },
+  "mi_cuenta": {
+    "titulo": "My account",
+    "descripcion": "In your user account, we offer you:",
+    "profile": {
+      "titulo": "My account",
+      "descripcion": "Profile card."
+    },
+    "correo": {
+      "titulo": "My UV email",
+      "descripcion": "Access your institutional email faster."
+    },
+    "cambiaclave": {
+      "titulo": "Cambia Clave",
+      "descripcion": "You can change or recover information from your institutional account such as your access code, personal email, etc."
+    },
+    "logout": {
+      "titulo": "Log out",
+      "descripcion": "End your current session."
+    },
+    "login": {
+      "titulo": "Log in"
+    }
+  },
+  "theme": {
+    "titulo": "Accesibility",
+    "tema": {
+      "title": "Theme",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "fontsize": {
+      "title": "Font size"
+    },
+    "cursorsize": {
+      "title": "Cursor size",
+      "normal": "Normal",
+      "grande": "Large"
+    }
+  },
+  "logout": {
+    "titulo": "Exit",
+    "detalle": "Do you want to close the current session?"
+  },
+  "form": {
+    "field_required": "(*) Required fields",
+    "required": "Required field",
+    "pattern": "Invalid field",
+    "email": "Invalid email",
+    "maxlength": "Invalid max length",
+    "minlength": "Invalid min length",
+    "min": "Invalid min value",
+    "max": "Invalid max value",
+    "empty": "Required field",
+    "valid": "Valid form",
+    "invalid": "Invalid form",
+    "rut": "Invalid Rut"
+  }
+}

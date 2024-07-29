@@ -1,0 +1,45 @@
+<ng-container *ngIf="aviso">
+  <p-dialog
+    header="{{ aviso.date }}"
+    [(visible)]="show"
+    [modal]="true"
+    [style]="{ width: '40vw' }"
+    [draggable]="false"
+    [resizable]="false"
+    position="top"
+    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  >
+    <div class="grid">
+      <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+        <h3 class="mt-0">{{ aviso.name }}</h3>
+        <span [innerHTML]="aviso.body"></span>
+      </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <p-button
+        label="{{ 'primeng.aria.close' | translate }}"
+        icon="pi pi-times"
+        styleClass="p-button-secondary"
+        (click)="show = false"
+        size="small"
+        [text]="true"
+      ></p-button>
+    </ng-template>
+  </p-dialog>
+</ng-container>
+
+<p-sidebar [(visible)]="showAvisos" position="right">
+  <ng-template pTemplate="header">
+    <span class="font-bold"> {{ "avisos.titulo" | translate }}</span>
+  </ng-template>
+  <div class="text-center mt-3" *ngIf="avisos.length === 0">
+    <i class="fa-regular fa-face-smile"></i> {{ "avisos.empty" | translate }}
+  </div>
+
+  <p-menu
+    [model]="avisos"
+    styleClass="menu-dtic"
+    *ngIf="avisos.length > 0"
+  ></p-menu>
+</p-sidebar>

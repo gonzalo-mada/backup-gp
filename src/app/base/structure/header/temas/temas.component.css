@@ -1,0 +1,12 @@
+.theme-box {
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.fs-circle {
+  cursor: pointer;
+}
+
+.fs-circle:hover {
+  color: var(--surface-500) !important;
+}

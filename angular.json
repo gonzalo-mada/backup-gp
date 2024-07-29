@@ -1,0 +1,222 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "template-frontend": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "tsconfig.app.json",
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": [
+              {
+                "input": "node_modules/primeng/resources/themes/bootstrap4-light-blue/theme.css",
+                "bundleName": "core-light",
+                "inject": false
+              },
+              {
+                "input": "src/assets/themes/theme_uv.css",
+                "bundleName": "uv-light",
+                "inject": false
+              },
+              {
+                "input": "src/app/base/styles/themes/light.css",
+                "bundleName": "base-light",
+                "inject": false
+              },
+              {
+                "input": "src/app/project/styles/themes/light.css",
+                "bundleName": "project-light",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/bootstrap4-dark-blue/theme.css",
+                "bundleName": "core-dark",
+                "inject": false
+              },
+              {
+                "input": "src/assets/themes/theme_uv_dark.css",
+                "bundleName": "uv-dark",
+                "inject": false
+              },
+              {
+                "input": "src/app/base/styles/themes/dark.css",
+                "bundleName": "base-dark",
+                "inject": false
+              },
+              {
+                "input": "src/app/project/styles/themes/dark.css",
+                "bundleName": "project-dark",
+                "inject": false
+              },
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeflex/primeflex.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/ngx-spinner/animations/ball-scale-multiple.css",
+              "src/assets/fonts/nunito/Nunito.css",
+              "src/app/base/styles/main.css",
+              "src/app/base/styles/error.css",
+              "src/app/base/styles/menu-header-dtic.css",
+              "src/app/project/styles/main.css"
+            ],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/@fortawesome/fontawesome-free/js/solid.js",
+              "node_modules/@fortawesome/fontawesome-free/js/regular.js",
+              "node_modules/@fortawesome/fontawesome-free/js/fontawesome.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "5000kb",
+                  "maximumError": "10mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            },
+            "local": {
+              "optimization": false,
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.local.ts"
+                }
+              ]
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "template-frontend:build:production"
+            },
+            "development": {
+              "browserTarget": "template-frontend:build:development"
+            },
+            "local": {
+              "browserTarget": "template-frontend:build:local"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "template-frontend:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "tsconfig.spec.json",
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": [
+              {
+                "input": "node_modules/primeng/resources/themes/bootstrap4-light-blue/theme.css",
+                "bundleName": "core-light",
+                "inject": false
+              },
+              {
+                "input": "src/assets/themes/theme_uv.css",
+                "bundleName": "uv-light",
+                "inject": false
+              },
+              {
+                "input": "src/app/base/styles/themes/light.css",
+                "bundleName": "base-light",
+                "inject": false
+              },
+              {
+                "input": "src/app/project/styles/themes/light.css",
+                "bundleName": "project-light",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/bootstrap4-dark-blue/theme.css",
+                "bundleName": "core-dark",
+                "inject": false
+              },
+              {
+                "input": "src/assets/themes/theme_uv_dark.css",
+                "bundleName": "uv-dark",
+                "inject": false
+              },
+              {
+                "input": "src/app/base/styles/themes/dark.css",
+                "bundleName": "base-dark",
+                "inject": false
+              },
+              {
+                "input": "src/app/project/styles/themes/dark.css",
+                "bundleName": "project-dark",
+                "inject": false
+              },
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeflex/primeflex.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/ngx-spinner/animations/ball-scale-multiple.css",
+              "src/assets/fonts/nunito/Nunito.css",
+              "src/app/base/styles/main.css",
+              "src/app/base/styles/error.css",
+              "src/app/base/styles/menu-header-dtic.css",
+              "src/app/project/styles/main.css"
+            ],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/@fortawesome/fontawesome-free/js/solid.js",
+              "node_modules/@fortawesome/fontawesome-free/js/regular.js",
+              "node_modules/@fortawesome/fontawesome-free/js/fontawesome.js"
+            ],
+            "karmaConfig": "karma.conf.js",
+            "codeCoverage": true,
+            "codeCoverageExclude": [
+              "src/app/base/test/mocks/**/*",
+              "src/app/project/test/mocks/**/*",
+              "src/app/base/services/window.service.ts"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": false
+  }
+}
