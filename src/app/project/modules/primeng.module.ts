@@ -7,6 +7,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
 import { CardModule } from 'primeng/card';
 import { ToastModule } from 'primeng/toast';
+import { ToolbarModule } from 'primeng/toolbar';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [],
@@ -17,7 +19,10 @@ import { ToastModule } from 'primeng/toast';
     InputTextModule,
     MenuModule,
     CardModule,
-    ToastModule
+    //primeng gp
+    TableModule,
+    ToastModule,
+    ToolbarModule
   ],
   exports: [
     CommonModule,
@@ -25,7 +30,10 @@ import { ToastModule } from 'primeng/toast';
     InputTextModule,
     MenuModule,
     CardModule,
-    ToastModule
+    //primeng gp
+    TableModule,
+    ToastModule,
+    ToolbarModule
   ],
 })
 export class PrimengModule {}
