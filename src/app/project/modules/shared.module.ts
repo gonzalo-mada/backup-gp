@@ -3,9 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrimengModule } from './primeng.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { CardComponent } from '../components/card/card.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    CardComponent
+  ],
   imports: [
     CommonModule,
     PrimengModule,
@@ -19,6 +22,8 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     TranslateModule,
     ReactiveFormsModule,
+    //components gp
+    CardComponent
   ],
 })
 export class SharedModule {}
