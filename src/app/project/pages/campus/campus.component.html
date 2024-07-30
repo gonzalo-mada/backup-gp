@@ -1,84 +1,123 @@
 <!-- <p-toast key="campus"></p-toast> -->
 
-<div class="grid flex align-items-stretch flex-wrap">
+<div class="grid ">
     <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
         <app-card 
             header="Mantenedor de campus"
             subheader="Permite ver, crear y actualizar campus."
         >
-        
-        <p-toolbar styleClass="mb-4">
-            <ng-template pTemplate="left">
-                <div class="my-2">
-                    <button pButton label="Delete" icon="pi pi-trash" class="p-button-danger"></button>
+
+            <div class="flex justify-content-between align-content-center mb-2 mt-4">
+                <div>
+                    <p-button
+                    label="Eliminar seleccionados"
+                    icon="pi pi-trash"
+                    styleClass="p-button-danger p-button-outlined p-button-sm"
+                    ></p-button>
                 </div>
-            </ng-template>
-
-            <ng-template pTemplate="right">
-                <button pButton label="New" icon="pi pi-plus" class="p-button-success mr-2"></button>
-            </ng-template>
-        </p-toolbar>
-
-        <p-table
-            #tc
-            [value]="campuses"
-            [columns]="cols"
-            [rows]="5"
-            [globalFilterFields]="['nombre','estado']"
-            [paginator]="true" 
-            [rowsPerPageOptions]="[5,10,20]"
-            [showCurrentPageReport]="true" 
-            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros."
-            [(selection)]="selectedCampus" 
-            selectionMode="multiple" 
-            [rowHover]="true" 
-            dataKey="id"
-        >
-            <ng-template pTemplate="caption">
-                <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                    
-                    <span class="block mt-2 md:mt-0 p-input-icon-left">
-                        <i class="pi pi-search"></i>
-                        <input pInputText type="text" (input)="onGlobalFilter(tc, $event)" placeholder="Buscar..."  class="w-full sm:w-auto"/>
-                    </span>
+                <div>
+                    <p-button
+                    label="Agregar"
+                    icon="pi pi-plus"
+                    styleClass="p-button-success p-button-sm"
+                    ></p-button>
                 </div>
-            </ng-template>
+            </div>
 
-            <ng-template pTemplate="header">
-                <tr>
-                    <th style="width: 3rem">
-                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                    </th>
-                    <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
-                    <th pSortableColumn="estado">Estado <p-sortIcon field="estado"></p-sortIcon></th>
-                    <th>Acciones</th>
-                </tr>
-            </ng-template>
-
-            <ng-template pTemplate="body" let-campus >
-                <tr>
-                    <td>
-                        <p-tableCheckbox [value]="campus"></p-tableCheckbox>
-                    </td>
-                    <td style="width:50%; min-width:10rem;"><span class="p-column-title">Nombre</span>
-                        {{campus.nombre}}
-                    </td>
-
-                    <td style="width:50%; min-width:10rem;"><span class="p-column-title">Estado</span>
-                        {{campus.estado}}
-                    </td>
-                    <td>
-                        <div class="flex">
-                            <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" ></button>
-                            <button pButton icon="pi pi-trash" class="p-button-rounded p-button-warning" ></button>
+            <p-table
+                #tc
+                [value]="campuses"
+                [columns]="cols"
+                [rows]="10"
+                [globalFilterFields]="['nombre','estado']"
+                [paginator]="false" 
+                [rowsPerPageOptions]="[10,25,50]"
+                [showCurrentPageReport]="true" 
+                currentPageReportTemplate="{first} hasta {last} de {totalRecords} registros."
+                [(selection)]="selectedCampus" 
+                selectionMode="multiple" 
+                [rowHover]="true" 
+                dataKey="id"
+            >
+                <ng-template pTemplate="caption">
+                    <div class="flex justify-content-between align-content-center">
+                        <div>
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" (input)="onGlobalFilter(tc, $event)" placeholder="Buscar..."  />
+                            </span>
+                            <p-button
+                                styleClass="p-button-text p-button-sm ml-2"
+                                icon="pi pi-filter-slash"
+                                pTooltip="Limpiar filtros"
+                                (click)="tc.clear()"
+                            ></p-button>
                         </div>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table> 
+                        <div>
+                            <!-- <p-button
+                            styleClass="p-button-danger p-button-sm mr-2"
+                            icon="pi pi-file-pdf"
+                            label="Descargar"
+                            >
+                            </p-button> -->
+                            <p-button
+                            pRipple
+                            label="Actualizar"
+                            icon="pi pi-refresh"
+                            styleClass="p-button-sm p-button-info"
+                            (click)="refreshTable()"
+                            ></p-button>
+                        </div>
+                        
+                    </div>
+                </ng-template>
 
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
+                        <th pSortableColumn="estado">Estado <p-sortIcon field="estado"></p-sortIcon></th>
+                        <th style="min-width: 10rem">Acciones</th>
+                    </tr>
+                </ng-template>
 
-        <p>campus works!</p>
+                <ng-template pTemplate="body" let-campus >
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="campus"></p-tableCheckbox>
+                        </td>
+                        <td style="width:50%; min-width:10rem;">
+                            <span class="p-column-title">Nombre</span>
+                            {{campus.nombre}}
+                        </td>
+
+                        <td style="width:50%; min-width:10rem;">
+                            <span class="p-column-title">Estado</span>
+                            <span [class]="'estado-badge estado-' + (campus.estado ? campus.estado.toLowerCase() : '')">
+                                {{campus.estado}}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="flex">
+                                <p-button
+                                    icon="pi pi-trash"
+                                    styleClass="p-button-sm p-button-danger mr-2"
+                                    pTooltip="Eliminar registro"
+                                ></p-button>
+                                <p-button
+                                    icon="pi pi-pencil"
+                                    styleClass="p-button-sm p-button-warning mr-2"
+                                    pTooltip="Editar registro"
+                                ></p-button>
+
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table> 
+
         </app-card>
     </div>
 </div>

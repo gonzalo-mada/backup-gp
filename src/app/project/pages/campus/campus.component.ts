@@ -51,6 +51,10 @@ export class CampusComponent implements OnInit {
     }
   }
 
+  refreshTable(){
+    this.getCampuses();
+  }
+
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
 }
