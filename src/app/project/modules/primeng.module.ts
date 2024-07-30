@@ -9,6 +9,8 @@ import { CardModule } from 'primeng/card';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
   declarations: [],
@@ -20,6 +22,8 @@ import { TableModule } from 'primeng/table';
     MenuModule,
     CardModule,
     //primeng gp
+    DialogModule,
+    FileUploadModule,
     TableModule,
     ToastModule,
     ToolbarModule
@@ -31,6 +35,8 @@ import { TableModule } from 'primeng/table';
     MenuModule,
     CardModule,
     //primeng gp
+    DialogModule,
+    FileUploadModule,
     TableModule,
     ToastModule,
     ToolbarModule

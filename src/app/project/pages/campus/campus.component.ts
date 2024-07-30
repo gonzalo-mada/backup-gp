@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CampusService } from '../../services/campus.service';
+import { FileUpload } from 'primeng/fileupload';
 import { Table } from 'primeng/table';
 import { ErrorTemplateHandler } from 'src/app/base/tools/error/error.handler';
 import { SystemService } from 'src/app/base/services/system.service';
 import { Campus } from '../../models/Campus';
-
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { FileUtils } from '../../tools/utils/file.utils';
 
 
 @Component({
@@ -16,11 +19,28 @@ import { Campus } from '../../models/Campus';
 export class CampusComponent implements OnInit {
 
   campuses: Campus[] = [];
+  campus: Campus = {};
+
   cols: any[] = [];
   selectedCampus: Campus[] = [];
 
+  submitted: boolean = false;
+  dialog: boolean = false;
+
+  mode: string = '';
+  commentsFile: string[] = [];
+
+  fbForm: FormGroup = new FormBuilder().group({
+    nombre: new FormControl<string>('', [Validators.required]),
+  })
+
+  files: any[] = [];
+
   constructor(private campusService: CampusService,
+              private confirmationService: ConfirmationService,
               private errorTemplateHandler: ErrorTemplateHandler,
+              private fileUtils: FileUtils,
+              private messageService: MessageService,
               private systemService: SystemService
   ){}
 
@@ -57,8 +77,86 @@ export class CampusComponent implements OnInit {
 
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
-}
+  }
 
+  openNew(){
+    this.mode = 'create';
+    console.log("holaaaa");
+    this.campus = {};
+    this.submitted = false;
+    this.dialog = true; 
+    
+  }
+
+  submit() {
+    this.reset();
+    this.messageService.add({
+      severity: 'success',
+      detail: 'Submit',
+      key: 'formularios',
+      summary: 'FormBuilder',
+    });
+  }
+
+  reset() {
+    this.fbForm.reset();
+  }
+
+  uploadHandler(uploader: FileUpload) {
+    this.confirmationService.confirm({
+        message: `¿Desea cargar los documentos seleccionados?`,
+        acceptLabel: 'Cargar',
+        acceptIcon: 'pi pi-upload',
+        rejectLabel: 'Cancelar',
+        acceptButtonStyleClass: 'p-button-success p-button-sm',
+        rejectButtonStyleClass:
+            'p-button-secondary p-button-text p-button-sm',
+        accept: () => {
+            this.saveDocs(uploader);
+        },
+    });
+  }
+
+  async saveDocs(uploader: FileUpload){
+    this.systemService.loading(true);
+
+    for (let i = 0; i < this.files.length; i++) {
+      let file: any = await this.fileUtils.onSelectFile(this.files[i]);
+      let documento: any = {
+        nombre: `${file.filename}.${file.format}`,
+        archivo: file.binary,
+        tipo: file.format,
+        extras: {
+            idCampus: this.campus.id,
+            nombre: this.campus.nombre
+        },
+      };
+
+      try {
+        //pendiente tabla-pasantias.component.ts en linea 238
+      } catch (error) {
+        //pendiente
+      }
+
+    }
+
+    this.systemService.loading(false);
+  }
+
+  onSelect(event: any) {
+    this.commentsFile.push('');
+    this.files = event.currentFiles;
+  }
+
+  
+
+  removeFileUploader(file: File, uploader: FileUpload, index: number) {
+    uploader.files = uploader.files.filter((f) => f != file);
+    this.commentsFile.splice(index, 1);
+    this.files.splice(index, 1);
+  }
+
+  
   
 
 }

@@ -1,28 +1,17 @@
 <!-- <p-toast key="campus"></p-toast> -->
 
-<div class="grid ">
+<div class="grid">
     <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
         <app-card 
             header="Mantenedor de campus"
             subheader="Permite ver, crear y actualizar campus."
         >
 
-            <div class="flex justify-content-between align-content-center mb-2 mt-4">
-                <div>
-                    <p-button
-                    label="Eliminar seleccionados"
-                    icon="pi pi-trash"
-                    styleClass="p-button-danger p-button-outlined p-button-sm"
-                    ></p-button>
-                </div>
-                <div>
-                    <p-button
-                    label="Agregar"
-                    icon="pi pi-plus"
-                    styleClass="p-button-success p-button-sm"
-                    ></p-button>
-                </div>
-            </div>
+            <app-menu-buttons-table
+                (clickOpenNew)="openNew()"
+            ></app-menu-buttons-table>
+
+            
 
             <p-table
                 #tc
@@ -119,6 +108,132 @@
             </p-table> 
 
         </app-card>
+
+        <app-dialog [(visible)]="dialog">
+            
+            <div header>
+                <ng-container [ngSwitch]="mode">
+
+                    <ng-container *ngSwitchCase="'create'">
+                        <span class="text-xl">Agregar campus</span>
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'edit'">
+                        <span class="text-xl">Actualizar campus</span>
+                    </ng-container>
+
+                </ng-container>
+            </div>
+
+            <div content>
+                <div class="grid">
+                    <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                        <form [formGroup]="fbForm">
+                            <div class="grid">
+
+                              <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                                <app-form-isvalid [valid]="fbForm.valid"></app-form-isvalid>
+                              </div>
+
+                              <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                                <div class="field">
+                                  <label>Nombre *</label>
+                                  <input type="text" pInputText formControlName="nombre" class="w-full" />
+                                  <app-form-control
+                                    [control]="fbForm.controls['nombre']"
+                                    [validators]="['required']"
+                                  ></app-form-control>
+                                </div>
+                              </div>
+
+                              <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                                <div class="field">
+                                  <label>Adjuntar REXE (.pdf) *</label>
+                                  <p-fileUpload
+                                        #uploader
+                                        [customUpload]="true"
+                                        [maxFileSize]="10000000"
+                                        [showCancelButton]="true"
+                                        (onSelect)="onSelect($event)"
+                                        (uploadHandler)="uploadHandler(uploader)"
+                                        chooseLabel="Seleccionar"
+                                        uploadLabel="Cargar"
+                                        cancelLabel="Cancelar"
+                                        cancelIcon="pi pi-trash"
+                                        accept="application/pdf"
+                                        [showUploadButton]="false"
+                                        multiple="multiple"
+
+                                    >
+                                        <ng-template let-file let-i="index" pTemplate="file">
+                                            <div class="p-grid">
+                                                <div class="p-col-5 p-d-flex ">
+                                                    <div style="width: 55px; padding: 5px">
+                                                        <img
+                                                          width="40"
+                                                          src="https://repositorio.uv.cl/imagenes/extensions/{{
+                                                            file.name.toLowerCase() | fileExtension
+                                                          }}.png"
+                                                          style="margin: 0 auto"
+                                                        />
+                                                      </div>
+                                                      <div>
+                                                        <small>{{ file.name }}</small><br />
+                                                        <small
+                                                          ><i class="pi pi-save"></i> {{ file.size | fileSize }}</small
+                                                        >
+                                                      </div>
+                                                </div>
+                                                <div class="p-col-5 p-d-flex">
+                                                    <textarea placeholder="Comentarios (opcional)" maxLength="150" [(ngModel)]="commentsFile[i]" style="width: 100%; resize: none;" pInputTextarea></textarea>
+                                                </div>
+                                                <div class="p-col-2 p-d-flex ">
+                                                    <div class="p-ml-auto p-mr-0 ">
+                                                      <button
+                                                      pButton
+                                                      pRipple
+                                                      class="p-button-sm p-button-outlined p-button-secondary"
+                                                      pTooltip="Quitar documento"
+                                                      icon="pi pi-trash"
+                                                      (click)="removeFileUploader(file, uploader, i)"
+                                                    ></button>
+                                    
+                                                    </div>
+                                                  </div>
+                                            </div>
+                                        </ng-template>
+                                    </p-fileUpload>
+                                </div>
+                              </div>
+
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div footer>
+                <p-button
+                label="Cerrar"
+                icon="pi pi-times"
+                styleClass="p-button-sm p-button-secondary mr-2"
+                (click)="dialog = false"
+                [text]="true"
+                ></p-button>
+                <p-button
+                label="Guardar"
+                icon="pi pi-check"
+                styleClass="mr-2 p-button-success p-button-sm"
+                [disabled]="!fbForm.valid"
+                (click)="dialog = false && fbForm.valid && submit()"
+                ></p-button>
+            </div>
+            
+            
+
+        </app-dialog>
+
     </div>
 </div>
 
