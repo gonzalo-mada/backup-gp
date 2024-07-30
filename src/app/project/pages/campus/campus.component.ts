@@ -30,8 +30,12 @@ export class CampusComponent implements OnInit {
   mode: string = '';
   commentsFile: string[] = [];
 
+
+
   fbForm: FormGroup = new FormBuilder().group({
     nombre: new FormControl<string>('', [Validators.required]),
+    commentsFile: new FormControl<string>(''),
+    // files: [[], this.filesValidator]
   })
 
   files: any[] = [];
@@ -54,6 +58,13 @@ export class CampusComponent implements OnInit {
       { field: 'accion', header: 'Acciones' }
     ];
     
+  }
+
+  filesValidator(control: FormControl): { [key: string]: any } | null {
+    console.log("entre");
+    
+    const files = control.value;
+    return files && files.length > 0 ? null : { required: true };
   }
 
   async getCampuses(){
@@ -103,6 +114,8 @@ export class CampusComponent implements OnInit {
   }
 
   uploadHandler(uploader: FileUpload) {
+    console.log("entre a uploadhandler");
+    
     this.confirmationService.confirm({
         message: `¿Desea cargar los documentos seleccionados?`,
         acceptLabel: 'Cargar',
@@ -132,11 +145,6 @@ export class CampusComponent implements OnInit {
         },
       };
 
-      try {
-        //pendiente tabla-pasantias.component.ts en linea 238
-      } catch (error) {
-        //pendiente
-      }
 
     }
 
