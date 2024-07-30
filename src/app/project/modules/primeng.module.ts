@@ -11,6 +11,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @NgModule({
   declarations: [],
@@ -24,6 +25,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     //primeng gp
     DialogModule,
     FileUploadModule,
+    InputTextareaModule,
     TableModule,
     ToastModule,
     ToolbarModule
@@ -37,6 +39,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     //primeng gp
     DialogModule,
     FileUploadModule,
+    InputTextareaModule,
     TableModule,
     ToastModule,
     ToolbarModule
