@@ -30,10 +30,11 @@ export class CampusComponent implements OnInit {
 
   mode: string = '';
 
-  files: { file: any; comment: string; uploaded: boolean }[] = [];
-  uploadedFiles: any[] = [];
+  validateFiles: { file: any; comment: string; uploaded: boolean }[] = [];
+  validateUploadedFiles: any[] = [];
 
-  commentsFile: any[] = [];
+  extrasDocs : any = {};
+  documento: any = {};
 
 
   public fbForm : FormGroup = this.fb.group({
@@ -58,23 +59,30 @@ export class CampusComponent implements OnInit {
       { field: 'estado', header: 'Estado' },
       { field: 'accion', header: 'Acciones' }
     ];
+
+    this.campus = {
+      id: "131",
+      nombre: "Probando Campus",
+    }
+
+    this.extrasDocs = {
+      idCampus: this.campus.id,
+      nombreCampus: this.campus.nombre,
+    }
     
   }
 
-  filesValidator(control: any): { [key: string]: boolean } | null {
-    console.log("entre al validador de files");
-    
-    const notUploaded = this.files.some(element => !element.uploaded);
+  filesValidator(control: any): { [key: string]: boolean } | null {   
+    const notUploaded = this.validateFiles.some(element => !element.uploaded);
 
     if (notUploaded) {
       return { required: true };
     }
 
-    if (this.uploadedFiles.length === 0) {
+    if (this.validateUploadedFiles.length === 0) {
       return { required: true };
     }
 
-  
     return null;
   }
 
@@ -87,8 +95,9 @@ export class CampusComponent implements OnInit {
     } catch (error) {
       this.errorTemplateHandler.processError(error, {
         notifyMethod: 'alert',
-        message: 'Hubo un error al obtener la data. Intente nuevamente.',
+        message: 'Hubo un error al obtener los registros. Intente nuevamente.',
       });
+      this.systemService.loading(false);
     }
   }
 
@@ -122,107 +131,31 @@ export class CampusComponent implements OnInit {
     this.fbForm.reset();
   }
 
-  uploadHandler(uploader: FileUpload) {
-    this.saveDocs(uploader)
+
+  filesChanged(allFiles: any){
+    this.validateFiles = allFiles.files;
+    this.validateUploadedFiles = allFiles.uploadedFiles
+    this.fbForm.controls['files'].updateValueAndValidity();
   }
 
-  async saveDocs(uploader: FileUpload){
-    this.systemService.loading(true);
-
-    this.campus = {
-      id: "131",
-      nombre: "Probando Campus",
-    }
+  async saveDoc(documento: any){
     
+    try {
+      this.systemService.loading(true);
 
-    for (let i = 0; i < this.files.length; i++) {
-      let file: any = await this.fileUtils.onSelectFile(this.files[i].file);
-      let documento: any = {
-        nombre: `${file.filename}.${file.format}`,
-        archivo: file.binary,
-        tipo: file.format,
-        extras: {
-            idCampus: this.campus.id,
-            nombreCampus: this.campus.nombre,
-            pesoDocumento: this.files[i].file.size,
-            comentarios: this.files[i].comment
+      let uploadDoc = await this.campusService.saveDocs(documento);
+      console.log("uploadDoc",uploadDoc);
 
-        },
-      };
+      this.systemService.loading(false);
 
-      try {
-
-        let uploadDoc = await this.campusService.saveDocs(documento);
-        this.uploadedFiles.push(uploadDoc)
-        console.log("uploadDoc",uploadDoc);
-        
-      } catch (e:any) {
-        this.errorTemplateHandler.processError(e, {
-          notifyMethod: 'alert',
-          message: e.message,
-        });
-        return;
-      }
-      
-      
-      uploader.files = uploader.files.filter((f) => f.name !== this.files[i].file.name);
+    } catch (e:any) {
+      this.systemService.loading(false);
+      this.errorTemplateHandler.processError(e, {
+        notifyMethod: 'alert',
+        message: e.message,
+      });
+      return;
     }
-
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Documentos cargados',
-      detail: 'Se han cargado los documentos correctamente.',
-    });
-    
-    this.files = [];
-    this.fbForm.controls['files'].updateValueAndValidity();
-    // uploader.clear();
-
-
-    this.systemService.loading(false);
-  }
-
-  onSelect(event: any) {
-
-    // Lista temporal para almacenar archivos sin duplicados
-    const uniqueFiles = event.currentFiles.filter((newFile: any) => {
-      return !this.files.some(fileWithComment => fileWithComment.file.name === newFile.name);
-    });
-
-    // Agregar nuevos archivos con un comentario vacío
-    uniqueFiles.forEach((newFile: any) => {
-      this.files.push({ file: newFile, comment: '', uploaded: false });
-    });
-
-    //Actualizar validador de archivos
-    this.fbForm.controls['files'].updateValueAndValidity();
-  }
-
-  onCommentChange(index: number, comment: string) {
-    this.files[index].comment = comment;
-  }
-
-
-  choose(event: any, callback: any){
-    callback();
-  }
-
-  uploadEvent(callback: any) {
-    callback();
-  }
-
-  onRemoveTemplatingFile(file: File, uploader: FileUpload, index: number) {
-    uploader.files = uploader.files.filter((f) => f != file);
-    this.files.splice(index, 1);
-    this.fbForm.controls['files'].updateValueAndValidity();
-
-  }
-
-
-  clearAllFiles(clearCallback: any){
-    this.files = [];
-    clearCallback();
-    this.fbForm.controls['files'].updateValueAndValidity();
   }
 
 

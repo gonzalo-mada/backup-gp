@@ -12,15 +12,18 @@ import { FormIsvalidComponent } from 'src/app/base/components/form-isvalid/form-
 import { FormControlComponent } from 'src/app/base/components/form-control/form-control.component';
 import { FileSizePipe } from '../tools/pipes/file-size.pipe';
 import { FileExtensionPipe } from '../tools/pipes/file-extension.pipe';
+import { UploaderFilesComponent } from '../components/uploader-files/uploader-files.component';
 
 @NgModule({
   declarations: [
     CardComponent,
     DialogComponent,
     MenuButtonsTableComponent,
+    UploaderFilesComponent,
     //pipes
     FileSizePipe,
-    FileExtensionPipe
+    FileExtensionPipe,
+    
   ],
   imports: [
     CommonModule,
@@ -42,6 +45,7 @@ import { FileExtensionPipe } from '../tools/pipes/file-extension.pipe';
     CardComponent,
     DialogComponent,
     MenuButtonsTableComponent,
+    UploaderFilesComponent,
     //components base to gp
     FormIsvalidComponent,
     FormControlComponent,
