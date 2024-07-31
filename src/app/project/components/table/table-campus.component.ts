@@ -17,6 +17,8 @@ export class TableCampusComponent {
   @Output()
   selectedCampus: EventEmitter<Campus> = new EventEmitter<Campus>();
   
+  @Output() refresh = new EventEmitter<void>();
+
   constructor(){ }
 
   ngOnInit(){
@@ -31,5 +33,9 @@ export class TableCampusComponent {
   }
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
+
+  refreshTable() {
+    this.refresh.emit();
   }
 }
