@@ -8,6 +8,8 @@ import { Campus } from '../../models/Campus';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FileUtils } from '../../tools/utils/file.utils';
+import { TableCampusComponent } from '../../components/table-campus/table-campus.component';
+
 
 
 @Component({
@@ -22,7 +24,7 @@ export class CampusComponent implements OnInit {
   campuses: Campus[] = [];
   campus: Campus = {};
 
-  cols: any[] = [];
+  //cols: any[] = [];
   selectedCampus: Campus[] = [];
 
   submitted: boolean = false;
@@ -54,11 +56,11 @@ export class CampusComponent implements OnInit {
     
     this.getCampuses();
 
-    this.cols = [
-      { field: 'nombre', header: 'Nombre' },
-      { field: 'estado', header: 'Estado' },
-      { field: 'accion', header: 'Acciones' }
-    ];
+    // this.cols = [
+    //   { field: 'nombre', header: 'Nombre' },
+    //   { field: 'estado', header: 'Estado' },
+    //   { field: 'accion', header: 'Acciones' }
+    // ];
 
     this.campus = {
       id: "131",
@@ -105,9 +107,9 @@ export class CampusComponent implements OnInit {
     this.getCampuses();
   }
 
-  onGlobalFilter(table: Table, event: Event) {
-    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
-  }
+  // onGlobalFilter(table: Table, event: Event) {
+  //   table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  // }
 
   openNew(){
     this.mode = 'create';

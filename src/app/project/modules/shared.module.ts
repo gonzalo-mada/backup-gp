@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CardComponent } from '../components/card/card.component';
 import { DialogComponent } from '../components/dialog/dialog.component';
 import { MenuButtonsTableComponent } from '../components/menu-buttons-table/menu-buttons-table.component';
+import { TableCampusComponent } from '../components/table-campus/table-campus.component';
 import { FormIsvalidComponent } from 'src/app/base/components/form-isvalid/form-isvalid.component';
 import { FormControlComponent } from 'src/app/base/components/form-control/form-control.component';
 import { FileSizePipe } from '../tools/pipes/file-size.pipe';
@@ -20,6 +21,7 @@ import { UploaderFilesComponent } from '../components/uploader-files/uploader-fi
     DialogComponent,
     MenuButtonsTableComponent,
     UploaderFilesComponent,
+    TableCampusComponent,
     //pipes
     FileSizePipe,
     FileExtensionPipe,
@@ -46,6 +48,7 @@ import { UploaderFilesComponent } from '../components/uploader-files/uploader-fi
     DialogComponent,
     MenuButtonsTableComponent,
     UploaderFilesComponent,
+    TableCampusComponent,
     //components base to gp
     FormIsvalidComponent,
     FormControlComponent,
