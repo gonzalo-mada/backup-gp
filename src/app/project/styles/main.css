@@ -15,3 +15,15 @@
     background: #FFCDD2;
     color: #C63737;
 }
+.custom-badge.danger {
+    background-color: #ffcdd2;
+    color: #c63737;
+  }
+  .custom-badge.success {
+    background-color: #c8e6c9;
+    color: #256029;
+  }
+  .custom-badge.info {
+    background-color: #b3e5fc;
+    color: #23547b;
+  }
