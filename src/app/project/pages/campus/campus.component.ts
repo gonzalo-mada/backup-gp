@@ -8,7 +8,7 @@ import { Campus } from '../../models/Campus';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FileUtils } from '../../tools/utils/file.utils';
-import { TableCampusComponent } from '../../components/table/table-campus.component';
+import { TableCampusComponent } from '../../components/tables/table-campus.component';
 
 
 

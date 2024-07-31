@@ -19,14 +19,10 @@ export class TableCampusComponent {
   
   @Output() refresh = new EventEmitter<void>();
 
-  constructor(){ }
+  constructor(){}
 
   ngOnInit(){
-    this.cols = [
-      { field: 'nombre', header: 'Nombre' },
-      { field: 'estado', header: 'Estado' },
-      { field: 'accion', header: 'Acciones' }
-    ];
+    
   }
   selectCampus(campus: Campus){
     this.selectedCampus.emit(campus);
@@ -34,7 +30,6 @@ export class TableCampusComponent {
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
-
   refreshTable() {
     this.refresh.emit();
   }
