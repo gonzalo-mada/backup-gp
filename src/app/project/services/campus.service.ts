@@ -13,6 +13,25 @@ export class CampusService {
     return await this.invoker.httpInvoke('campus/getCampus');
   }
 
+  async saveDocs(docs: any){
+    return await this.invoker.httpInvoke(
+      {
+        service: 'campus/saveDocs',
+        retry: 0,
+        timeout: 30000
+      },
+      {
+          idCampus: docs.extras.idCampus,
+          nombre: docs.nombre,
+          archivo: docs.archivo,
+          tipo: docs.tipo,
+          nombreCampus: docs.extras.nombreCampus,
+          pesoDocumento: docs.extras.pesoDocumento,
+          comentarios: docs.extras.comentarios,
+      }
+    );
+  }
+
   // getCampus(): Observable<any> {
   //   return this.http.get<any>('assets/data/campus.json')
   //   .pipe(

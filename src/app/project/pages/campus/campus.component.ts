@@ -5,7 +5,7 @@ import { Table } from 'primeng/table';
 import { ErrorTemplateHandler } from 'src/app/base/tools/error/error.handler';
 import { SystemService } from 'src/app/base/services/system.service';
 import { Campus } from '../../models/Campus';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FileUtils } from '../../tools/utils/file.utils';
 
@@ -18,6 +18,7 @@ import { FileUtils } from '../../tools/utils/file.utils';
 })
 export class CampusComponent implements OnInit {
 
+  
   campuses: Campus[] = [];
   campus: Campus = {};
 
@@ -28,21 +29,21 @@ export class CampusComponent implements OnInit {
   dialog: boolean = false;
 
   mode: string = '';
-  commentsFile: string[] = [];
+
+  files: { file: any; comment: string; uploaded: boolean }[] = [];
+  uploadedFiles: any[] = [];
+
+  commentsFile: any[] = [];
 
 
-
-  fbForm: FormGroup = new FormBuilder().group({
-    nombre: new FormControl<string>('', [Validators.required]),
-    commentsFile: new FormControl<string>(''),
-    // files: [[], this.filesValidator]
+  public fbForm : FormGroup = this.fb.group({
+    nombre: ['', Validators.required],
+    files: ['', this.filesValidator.bind(this)]
   })
 
-  files: any[] = [];
-
   constructor(private campusService: CampusService,
-              private confirmationService: ConfirmationService,
               private errorTemplateHandler: ErrorTemplateHandler,
+              private fb: FormBuilder,
               private fileUtils: FileUtils,
               private messageService: MessageService,
               private systemService: SystemService
@@ -60,18 +61,27 @@ export class CampusComponent implements OnInit {
     
   }
 
-  filesValidator(control: FormControl): { [key: string]: any } | null {
-    console.log("entre");
+  filesValidator(control: any): { [key: string]: boolean } | null {
+    console.log("entre al validador de files");
     
-    const files = control.value;
-    return files && files.length > 0 ? null : { required: true };
+    const notUploaded = this.files.some(element => !element.uploaded);
+
+    if (notUploaded) {
+      return { required: true };
+    }
+
+    if (this.uploadedFiles.length === 0) {
+      return { required: true };
+    }
+
+  
+    return null;
   }
 
   async getCampuses(){
     try {
       this.systemService.loading(true);
       this.campuses = <Campus[]> await this.campusService.getCampus();
-      console.log("campuses",this.campuses);
       this.systemService.loading(false);
       
     } catch (error) {
@@ -92,7 +102,6 @@ export class CampusComponent implements OnInit {
 
   openNew(){
     this.mode = 'create';
-    console.log("holaaaa");
     this.campus = {};
     this.submitted = false;
     this.dialog = true; 
@@ -114,57 +123,107 @@ export class CampusComponent implements OnInit {
   }
 
   uploadHandler(uploader: FileUpload) {
-    console.log("entre a uploadhandler");
-    
-    this.confirmationService.confirm({
-        message: `¿Desea cargar los documentos seleccionados?`,
-        acceptLabel: 'Cargar',
-        acceptIcon: 'pi pi-upload',
-        rejectLabel: 'Cancelar',
-        acceptButtonStyleClass: 'p-button-success p-button-sm',
-        rejectButtonStyleClass:
-            'p-button-secondary p-button-text p-button-sm',
-        accept: () => {
-            this.saveDocs(uploader);
-        },
-    });
+    this.saveDocs(uploader)
   }
 
   async saveDocs(uploader: FileUpload){
     this.systemService.loading(true);
 
+    this.campus = {
+      id: "131",
+      nombre: "Probando Campus",
+    }
+    
+
     for (let i = 0; i < this.files.length; i++) {
-      let file: any = await this.fileUtils.onSelectFile(this.files[i]);
+      let file: any = await this.fileUtils.onSelectFile(this.files[i].file);
       let documento: any = {
         nombre: `${file.filename}.${file.format}`,
         archivo: file.binary,
         tipo: file.format,
         extras: {
             idCampus: this.campus.id,
-            nombre: this.campus.nombre
+            nombreCampus: this.campus.nombre,
+            pesoDocumento: this.files[i].file.size,
+            comentarios: this.files[i].comment
+
         },
       };
 
+      try {
 
+        let uploadDoc = await this.campusService.saveDocs(documento);
+        this.uploadedFiles.push(uploadDoc)
+        console.log("uploadDoc",uploadDoc);
+        
+      } catch (e:any) {
+        this.errorTemplateHandler.processError(e, {
+          notifyMethod: 'alert',
+          message: e.message,
+        });
+        return;
+      }
+      
+      
+      uploader.files = uploader.files.filter((f) => f.name !== this.files[i].file.name);
     }
+
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Documentos cargados',
+      detail: 'Se han cargado los documentos correctamente.',
+    });
+    
+    this.files = [];
+    this.fbForm.controls['files'].updateValueAndValidity();
+    // uploader.clear();
+
 
     this.systemService.loading(false);
   }
 
   onSelect(event: any) {
-    this.commentsFile.push('');
-    this.files = event.currentFiles;
+
+    // Lista temporal para almacenar archivos sin duplicados
+    const uniqueFiles = event.currentFiles.filter((newFile: any) => {
+      return !this.files.some(fileWithComment => fileWithComment.file.name === newFile.name);
+    });
+
+    // Agregar nuevos archivos con un comentario vacío
+    uniqueFiles.forEach((newFile: any) => {
+      this.files.push({ file: newFile, comment: '', uploaded: false });
+    });
+
+    //Actualizar validador de archivos
+    this.fbForm.controls['files'].updateValueAndValidity();
   }
 
-  
+  onCommentChange(index: number, comment: string) {
+    this.files[index].comment = comment;
+  }
 
-  removeFileUploader(file: File, uploader: FileUpload, index: number) {
+
+  choose(event: any, callback: any){
+    callback();
+  }
+
+  uploadEvent(callback: any) {
+    callback();
+  }
+
+  onRemoveTemplatingFile(file: File, uploader: FileUpload, index: number) {
     uploader.files = uploader.files.filter((f) => f != file);
-    this.commentsFile.splice(index, 1);
     this.files.splice(index, 1);
+    this.fbForm.controls['files'].updateValueAndValidity();
+
   }
 
-  
-  
+
+  clearAllFiles(clearCallback: any){
+    this.files = [];
+    clearCallback();
+    this.fbForm.controls['files'].updateValueAndValidity();
+  }
+
 
 }

@@ -127,181 +127,160 @@
 
             <div content>
 
-                <form [formGroup]="fbForm">
-                    <div class="grid">
-                      <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-                        <app-form-isvalid [valid]="fbForm.valid"></app-form-isvalid>
-                      </div>
-                      <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-                        <div class="field">
-                          <label>Nombre *</label>
-                          <input type="text" pInputText formControlName="nombre" class="w-full" />
-                          <app-form-control
-                            [control]="fbForm.controls['nombre']"
-                            [validators]="['required']"
-                          ></app-form-control>
-                        </div>
+                
+                    <form [formGroup]="fbForm">
+                        <div class="grid">
+                            <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                                <app-form-isvalid [valid]="fbForm.valid"></app-form-isvalid>
+                            </div>
 
-                        <div class="field">
-                            <label>Adjuntar REXE (.pdf) *</label>
-                            <p-fileUpload
-                                #uploader
-                                [customUpload]="true"
-                                [maxFileSize]="10000000"
-                                [showCancelButton]="true"
-                                (onSelect)="onSelect($event)"
-                                (uploadHandler)="uploadHandler(uploader)"
-                                chooseLabel="Seleccionar"
-                                uploadLabel="Cargar"
-                                cancelLabel="Cancelar"
-                                cancelIcon="pi pi-trash"
-                                accept="application/pdf"
-                                [showUploadButton]="false"
-                                [auto]="true"
-                                multiple="multiple"
-    
-                            >
-                                <ng-template pTemplate="content">
-                                    <p-table [value]="files" [tableStyle]="{'min-width': '300pz'}" *ngIf="files.length > 0">
-                                        <ng-template pTemplate="body" let-file let-i="index" >
-                                            <tr>
-                                                <td style="min-width: 250px;">
+                            <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                                <div class="field">
+                                  <label>Nombre *</label>
+                                  <input type="text" pInputText formControlName="nombre" class="w-full" />
+                                  <app-form-control
+                                    [control]="fbForm.controls['nombre']"
+                                    [validators]="['required']"
+                                  ></app-form-control>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="grid">
+                        <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                            <div class="field">
+                                <label>Adjuntar REXE (.pdf) *</label>
+                                <p-fileUpload
+                                    #uploader
+                                    [customUpload]="true"
+                                    [maxFileSize]="10000000"
+                                    (onSelect)="onSelect($event)"
+                                    (uploadHandler)="uploadHandler(uploader)"
+                                    accept="application/pdf"
+                                    [multiple]="true"
+        
+                                >
+                                    <ng-template pTemplate="header" let-chooseCallback="chooseCallback" let-uploadCallback="uploadCallback" let-clearCallback="clearCallback">
+                                        <div class="flex flex-wrap md:flex-wrap">
+                                            <div class="flex align-items-center justify-content-center m-1">
+                                                <p-button (click)="choose($event, chooseCallback)" icon="pi pi-plus" label="Seleccionar" styleClass="p-button-sm"  />
+                                            </div>
+                                            <div class="flex align-items-center justify-content-center m-1">
+                                                <p-button (click)="uploadEvent(uploadCallback)" icon="pi pi-upload" label="Cargar" styleClass="p-button-sm" [disabled]="!files || files.length === 0" pTooltip="Carga pendientes" />
+                                            </div>
+                                            <div class="flex align-items-center justify-content-center m-1">
+                                                <p-button (click)="clearAllFiles(clearCallback)" icon="pi pi-times" label="Cancelar" styleClass="p-button-sm" severity="danger" [disabled]="!files || files.length === 0"  pTooltip="Elimina pendientes" />
+                                            </div>
+                                        </div>
+                                    </ng-template>
+        
+        
+                                    <ng-template pTemplate="content"  let-removeFileCallback="removeFileCallback"  >
+                    
+                                        <div *ngIf="files.length > 0">
+                                            <h5>Pendientes</h5>
+                                            <p-table [value]="files" [tableStyle]="{'min-width': '300px'}" >
+                                                <ng-template pTemplate="body" let-fileWithComment let-i="rowIndex">
                                                     <tr>
-                                                        <td class="pr-3">
-                                                        <img width="40" src="https://repositorio.uv.cl/imagenes/extensions/{{file.name.toLowerCase() | fileExtension}}.png" style="margin: 0 auto" />
+                                                        <td style="min-width: 250px;">
+                                                            <tr>
+                                                                <td class="pr-3">
+                                                                <img width="40" src="https://repositorio.uv.cl/imagenes/extensions/{{fileWithComment.file.name.toLowerCase() | fileExtension}}.png" style="margin: 0 auto" />
+                                                                </td>
+                                                                <td style="word-break: break-all">
+                                                                {{ fileWithComment.file.name | lowercase | slice:0:15  }} {{ (fileWithComment.file.name.length > 15 ) ? '... .pdf' : '' }}<br />
+                                                                <em class="small" style="color: gray"><i class="pi pi-file"></i> {{ fileWithComment.file.size | fileSize }}</em>
+                                                                </td>
+                                                            </tr>
                                                         </td>
-                                                        <td style="word-break: break-all">
-                                                        {{ file.name | lowercase | slice:0:15  }} {{ (file.name.length > 15 ) ? '... .pdf' : '' }}<br />
-                                                        <em class="small" style="color: gray"><i class="pi pi-file"></i> {{ file.size | fileSize }}</em>
+                                                        <td>
+                                                            <p-badge value="Pendiente" severity="warning" />
+                                                        </td>
+                                                        <td>
+        
+                                                            <textarea 
+                                                                pInputTextarea
+                                                                placeholder="Comentarios (opcional)"
+                                                                maxLength="150"
+                                                                rows="2"
+                                                                cols="15"
+                                                                [autoResize]="true"
+                                                                [(ngModel)]="fileWithComment.comment"
+                                                                (ngModelChange)="onCommentChange(i, $event)"
+                                                            ></textarea>
+                                                            
+                                                        </td>
+                                                        <td>
+                                                            <button
+                                                                pButton
+                                                                class="p-button-sm p-button-outlined p-button-secondary"
+                                                                pTooltip="Quitar documento"
+                                                                icon="pi pi-trash"
+                                                                (click)="onRemoveTemplatingFile(fileWithComment.file, uploader, i)"
+                                                                pTooltip="Eliminar"
+                                                            ></button>
                                                         </td>
                                                     </tr>
-                                                </td>
-                                                <td>
-                                                    <textarea 
-                                                        pInputTextarea
-                                                        placeholder="Comentarios (opcional)"
-                                                        maxLength="150"
-                                                        rows="2"
-                                                        cols="15"
-                                                        formControlName="commentsFile[i]" 
-                                                        [autoResize]="true" 
-                                                    ></textarea>
-                                                </td>
-                                                <td>
-                                                    <button
-                                                        pButton
-                                                        class="p-button-sm p-button-outlined p-button-secondary"
-                                                        pTooltip="Quitar documento"
-                                                        icon="pi pi-trash"
-                                                        (click)="removeFileUploader(file, uploader, i)"
-                                                    ></button>
-                                                </td>
-                                            </tr>
-                                        </ng-template>
-                                    </p-table>
-                                </ng-template>
-    
-                                <ng-template pTemplate="file"></ng-template>
-                                
-                                
+                                                </ng-template>
+                                            </p-table>
+                                        </div>
+        
+        
+                                        <div *ngIf="uploadedFiles.length > 0">
+                                            <h5>Completados: {{ uploadedFiles.length }}</h5>
+                                            <p-table [value]="uploadedFiles" [tableStyle]="{'min-width': '300px'}" >
+                                                <ng-template pTemplate="body" let-file let-i="index" >
+                                                    <tr>
+                                                        <td style="min-width: 250px;">
+                                                            <tr>
+                                                                <td class="pr-3">
+                                                                <img width="40" src="https://repositorio.uv.cl/imagenes/extensions/{{file.nombre.toLowerCase() | fileExtension}}.png" style="margin: 0 auto" />
+                                                                </td>
+                                                                <td style="word-break: break-all">
+                                                                {{ file.nombre | lowercase | slice:0:15  }} {{ (file.nombre.length > 15 ) ? '... .pdf' : '' }}<br />
+                                                                <em class="small" style="color: gray"><i class="pi pi-file"></i> {{ file.extras.pesoDocumento | fileSize }}</em>
+                                                                </td>
+                                                            </tr>
+                                                        </td>
+                                                        <td>
+                                                            <p-badge value="Completado" severity="success" />
+                                                        </td>
+                                                        <td>
+                                                            <textarea 
+                                                                pInputTextarea
+                                                                maxLength="150"
+                                                                rows="2"
+                                                                cols="15"
+                                                                [autoResize]="true" 
+                                                                [disabled]="true"
+                                                            >{{ file.extras.comentarios == '' ? 'N/A' : 'file.extras.comentarios' }}</textarea>
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                </ng-template>
+                                            </p-table>
+                                        </div>
                                         
-                            </p-fileUpload>
-                            <app-form-control
-                            [control]="fbForm.controls['files']"
-                            [validators]="['required']"
-                            ></app-form-control>
-                            {{commentsFile | json}}
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-
-                <!-- <form [formGroup]="fbForm">                  
-                    <app-form-isvalid [valid]="fbForm.valid"></app-form-isvalid>
-                                      
-                    <div class="field">
-                        <label>Nombre *</label>
-                        <input type="text" pInputText formControlName="nombre" class="w-full" />
-                        <app-form-control
-                        [control]="fbForm.controls['nombre']"
-                        [validators]="['required']"
-                        ></app-form-control>
-                    </div>
-                    
-
-                    
-                    <div class="field">
-                        <label>Adjuntar REXE (.pdf) *</label>
-                        <p-fileUpload
-                            #uploader
-                            [customUpload]="true"
-                            [maxFileSize]="10000000"
-                            [showCancelButton]="true"
-                            (onSelect)="onSelect($event)"
-                            (uploadHandler)="uploadHandler(uploader)"
-                            chooseLabel="Seleccionar"
-                            uploadLabel="Cargar"
-                            cancelLabel="Cancelar"
-                            cancelIcon="pi pi-trash"
-                            accept="application/pdf"
-                            [showUploadButton]="false"
-                            [auto]="true"
-                            multiple="multiple"
-
-                        >
-                            <ng-template pTemplate="content">
-                                <p-table [value]="files" [tableStyle]="{'min-width': '300pz'}" *ngIf="files.length > 0">
-                                    <ng-template pTemplate="body" let-file let-i="index" >
-                                        <tr>
-                                            <td style="min-width: 250px;">
-                                                <tr>
-                                                    <td class="pr-3">
-                                                    <img width="40" src="https://repositorio.uv.cl/imagenes/extensions/{{file.name.toLowerCase() | fileExtension}}.png" style="margin: 0 auto" />
-                                                    </td>
-                                                    <td style="word-break: break-all">
-                                                    {{ file.name | lowercase | slice:0:15  }} {{ (file.name.length > 15 ) ? '... .pdf' : '' }}<br />
-                                                    <em class="small" style="color: gray"><i class="pi pi-file"></i> {{ file.size | fileSize }}</em>
-                                                    </td>
-                                                </tr>
-                                            </td>
-                                            <td>
-                                                <textarea 
-                                                    pInputTextarea
-                                                    placeholder="Comentarios (opcional)"
-                                                    maxLength="150"
-                                                    rows="2"
-                                                    cols="15"  
-                                                    [(ngModel)]="commentsFile[i]"
-                                                    [autoResize]="true" 
-                                                ></textarea>
-                                            </td>
-                                            <td>
-                                                <button
-                                                    pButton
-                                                    class="p-button-sm p-button-outlined p-button-secondary"
-                                                    pTooltip="Quitar documento"
-                                                    icon="pi pi-trash"
-                                                    (click)="removeFileUploader(file, uploader, i)"
-                                                ></button>
-                                            </td>
-                                        </tr>
+        
                                     </ng-template>
-                                </p-table>
-                            </ng-template>
-
-                            <ng-template pTemplate="file"></ng-template>
-                            
-                            
+        
+                                    <ng-template pTemplate="file"></ng-template>
                                     
-                        </p-fileUpload>
-                        <app-form-control
-                        [control]="fbForm.controls['files']"
-                        [validators]="['required']"
-                        ></app-form-control>
-                        {{commentsFile | json}}
+                                    
+                                            
+                                </p-fileUpload>
+        
+                                uploader: {{uploader.files.length | json}} <br>
+                                files: {{files.length | json}} <br>
+                                uploadedFiles: {{uploadedFiles.length | json}}
+                                
+                            </div>
+                            </div>
                     </div>
-                        
-                </form> -->
+                    
+                
+
+                
 
             </div>
 
@@ -314,7 +293,7 @@
                 [text]="true"
                 ></p-button>
                 <p-button
-                label="Guardar"
+                label="Agregar"
                 icon="pi pi-check"
                 styleClass="mr-2 p-button-success p-button-sm"
                 [disabled]="!fbForm.valid"

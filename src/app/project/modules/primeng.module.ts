@@ -12,6 +12,7 @@ import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { BadgeModule } from 'primeng/badge';
 
 @NgModule({
   declarations: [],
@@ -23,6 +24,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     MenuModule,
     CardModule,
     //primeng gp
+    BadgeModule,
     DialogModule,
     FileUploadModule,
     InputTextareaModule,
@@ -37,6 +39,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     MenuModule,
     CardModule,
     //primeng gp
+    BadgeModule,
     DialogModule,
     FileUploadModule,
     InputTextareaModule,
