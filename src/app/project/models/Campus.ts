@@ -1,5 +1,5 @@
 export interface Campus {
-    id?: string;
-    nombre?: string;
-    estado?: number;
+    Cod_campus?: string;
+    Descripcion_campus?: string;
+    Estado_campus?: number;
 }
