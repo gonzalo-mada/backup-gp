@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FileUpload } from 'primeng/fileupload';
-import { SystemService } from 'src/app/base/services/system.service';
 import { FileUtils } from '../../tools/utils/file.utils';
 import { MessageService } from 'primeng/api';
 
@@ -10,22 +9,30 @@ import { MessageService } from 'primeng/api';
   styles: [
   ]
 })
-export class UploaderFilesComponent {
+export class UploaderFilesComponent implements OnChanges {
 
   constructor(
               private fileUtils: FileUtils, 
               private messageService: MessageService,
-              private systemService: SystemService
             ){}
+
+  
 
   @Input() files: { file: File; comment: string; uploaded: boolean }[] = [];
   @Input() data: any ;
   @Input() extrasDocs: any ;
+  @Input() triggerUpload : boolean = false;
 
   @Output() filesChange = new EventEmitter<{ files: any[], uploadedFiles: any[] }>();
   @Output() saveDoc = new EventEmitter<any>();
 
   uploadedFiles: any[] = [];
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['triggerUpload'] && this.triggerUpload) {
+      this.uploadHandler();
+    }
+  }
 
   onSelect(event: any){
 
@@ -43,7 +50,7 @@ export class UploaderFilesComponent {
 
   }
 
-  async uploadHandler(uploader: FileUpload){
+  async uploadHandler(){
     
     for (let i = 0; i < this.files.length; i++) {
       let file: any = await this.fileUtils.onSelectFile(this.files[i].file);
@@ -64,24 +71,20 @@ export class UploaderFilesComponent {
         tipo: file.format,
         extras: combinedExtras,
       };
-      console.log("documento", documento);
       
       this.saveDoc.emit(documento);
-      this.uploadedFiles.push(documento);
+      //Para archivos completados
+      // this.uploadedFiles.push(documento);
 
-
-      uploader.files = uploader.files.filter((f) => f.name !== this.files[i].file.name);
+      // esto permitia borrar de la lista de pendientes el archivo subido
+      // uploader.files = uploader.files.filter((f) => f.name !== this.files[i].file.name);
 
     }
 
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Documentos cargados',
-      detail: 'Se han cargado los documentos correctamente.',
-    });
 
-    this.files = [];
+    // this.files = [];
     this.filesChange.emit({ files: this.files, uploadedFiles: this.uploadedFiles })
+
 
   }
 
@@ -89,9 +92,9 @@ export class UploaderFilesComponent {
     callback();
   }
 
-  uploadEvent(callback: any) {
-    callback();
-  }
+  // uploadEvent(callback: any) {
+  //   callback();
+  // }
 
   clearAllFiles(clearCallback: any){
     this.files = [];

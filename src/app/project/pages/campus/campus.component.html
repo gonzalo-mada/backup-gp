@@ -4,7 +4,7 @@
     <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
         <app-card 
             header="Mantenedor de campus"
-            subheader="Permite ver, crear y actualizar campus."
+            subheader="Permite ver, crear, actualizar y eliminar campus."
         >
 
             <app-menu-buttons-table
@@ -12,105 +12,22 @@
             ></app-menu-buttons-table>
 
             <app-table-campus
-                [campuses]="campuses"
-                (refresh)="refreshTable()"
+                [data]="campuses"
+                [cols]="cols"
+                [globalFiltros]="globalFiltros"
+                [dataKeyTable]="dataKeyTable"
+                (refreshTable)="getCampuses()"
+                (activeEditMode)="openEdit($event)"
+                (selectedCampus)="campusSeleccionado($event)"
             ></app-table-campus>
 
-            <!-- <p-table
-                #tc
-                [value]="campuses"
-                [columns]="cols"
-                [rows]="10"
-                [globalFilterFields]="['nombre','estado']"
-                [paginator]="false" 
-                [rowsPerPageOptions]="[10,25,50]"
-                [showCurrentPageReport]="true" 
-                currentPageReportTemplate="{first} hasta {last} de {totalRecords} registros."
-                [(selection)]="selectedCampus" 
-                selectionMode="multiple" 
-                [rowHover]="true" 
-                dataKey="id"
-            >
-                <ng-template pTemplate="caption">
-                    <div class="flex justify-content-between align-content-center">
-                        <div>
-                            <span class="p-input-icon-left">
-                                <i class="pi pi-search"></i>
-                                <input pInputText type="text" (input)="onGlobalFilter(tc, $event)" placeholder="Buscar..."  />
-                            </span>
-                            <p-button
-                                styleClass="p-button-text p-button-sm ml-2"
-                                icon="pi pi-filter-slash"
-                                pTooltip="Limpiar filtros"
-                                (click)="tc.clear()"
-                            ></p-button>
-                        </div>
-                        <div>
-                            <!-- <p-button
-                            styleClass="p-button-danger p-button-sm mr-2"
-                            icon="pi pi-file-pdf"
-                            label="Descargar"
-                            >
-                            </p-button> -->
-
-
-                            <!-- <p-button
-                            pRipple
-                            label="Actualizar"
-                            icon="pi pi-refresh"
-                            styleClass="p-button-sm p-button-info"
-                            (click)="refreshTable()"
-                            ></p-button>
-                        </div>
-                        
-                    </div>
-                </ng-template>
-
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th style="width: 3rem">
-                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                        </th>
-                        <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
-                        <th pSortableColumn="estado">Estado <p-sortIcon field="estado"></p-sortIcon></th>
-                        <th style="min-width: 10rem">Acciones</th>
-                    </tr>
-                </ng-template>
-
-                <ng-template pTemplate="body" let-campus >
-                    <tr>
-                        <td>
-                            <p-tableCheckbox [value]="campus"></p-tableCheckbox>
-                        </td>
-                        <td style="width:50%; min-width:10rem;">
-                            <span class="p-column-title">Nombre</span>
-                            {{campus.nombre}}
-                        </td>
-
-                        <td style="width:50%; min-width:10rem;">
-                            <span class="p-column-title">Estado</span>
-                            <span [class]="'estado-badge estado-' + (campus.estado ? campus.estado.toLowerCase() : '')">
-                                {{campus.estado}}
-                            </span>
-                        </td>
-                        <td>
-                            <div class="flex">
-                                <p-button
-                                    icon="pi pi-trash"
-                                    styleClass="p-button-sm p-button-danger mr-2"
-                                    pTooltip="Eliminar registro"
-                                ></p-button>
-                                <p-button
-                                    icon="pi pi-pencil"
-                                    styleClass="p-button-sm p-button-warning mr-2"
-                                    pTooltip="Editar registro"
-                                ></p-button>
-
-                            </div>
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>  -->
+            <p-button
+                label="test"
+                icon="pi pi-times"
+                styleClass="p-button-sm p-button-secondary mr-2"
+                (click)="test()"
+                [text]="true"
+                ></p-button>
 
         </app-card>
 
@@ -119,7 +36,7 @@
             <div header>
                 <ng-container [ngSwitch]="mode">
 
-                    <ng-container *ngSwitchCase="'create'">
+                    <ng-container *ngSwitchCase="'create' || 'edit'">
                         <span class="text-xl">Agregar campus</span>
                     </ng-container>
 
@@ -127,37 +44,219 @@
                         <span class="text-xl">Actualizar campus</span>
                     </ng-container>
 
+                    <ng-container *ngSwitchCase="'show'">
+                        <span class="text-xl">Ver campus</span>
+                    </ng-container>
+
                 </ng-container>
             </div>
 
             <div content>
-                <form [formGroup]="fbForm">
-                    <div class="grid">
-                        <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-                            <app-form-isvalid [valid]="fbForm.valid"></app-form-isvalid>
-                        </div>
-
-                        <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-                            <div class="field">
-                                <label>Nombre *</label>
-                                <input type="text" pInputText formControlName="nombre" class="w-full" />
-                                <app-form-control
-                                [control]="fbForm.controls['nombre']"
-                                [validators]="['required']"
-                                ></app-form-control>
+                <ng-container [ngSwitch]="mode">
+                    <ng-container *ngSwitchCase="'create'">
+                        <div class="grid">
+                            <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                                <app-form-isvalid [valid]="fbForm.valid"></app-form-isvalid>
                             </div>
                         </div>
-                    </div>
-                </form>
+                        <form [formGroup]="fbForm">
+                            <div class="grid">
+                                <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                                    <div class="field">
+                                        <label>Nombre *</label>
+                                        <input type="text" pInputText formControlName="Descripcion_campus" class="w-full" placeholder="Ingrese nombre de campus" autofocus />
+                                        
+                                        <app-form-control
+                                        [control]="fbForm.controls['Descripcion_campus']"
+                                        [validators]="['required']"
+                                        ></app-form-control>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </form>
+                        <div class="grid">
+                            <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                                <app-uploader-files
+                                    [data]="campus" 
+                                    [extrasDocs]="extrasDocs"
+                                    [triggerUpload]="triggerUpload"
+                                    (filesChange)="filesChanged($event)"
+                                    (saveDoc)="saveDoc($event)"
+                                ></app-uploader-files>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'edit'">
+                        <div class="grid">
+                            <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                                <app-form-isvalid [valid]="fbForm.valid"></app-form-isvalid>
+                            </div>
+                        </div>
+                        <form [formGroup]="fbForm">
+                            <div class="grid">
+                                <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                                    <div class="field">
+                                        <label>Nombre *</label>
+                                        <input type="text" pInputText formControlName="Descripcion_campus" class="w-full" placeholder="Ingrese nombre de campus" autofocus />
+                                        
+                                        <app-form-control
+                                        [control]="fbForm.controls['Descripcion_campus']"
+                                        [validators]="['required']"
+                                        ></app-form-control>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </form>
+                    </ng-container>
 
-                <app-uploader-files 
-                    [data]="campus" 
-                    [extrasDocs]="extrasDocs"
-                    (filesChange)="filesChanged($event)"
-                    (saveDoc)="saveDoc($event)" 
-                ></app-uploader-files>
+                    <ng-container *ngSwitchCase="'show'">
+                        <form>
+                            <div class="grid">
+                                <div class="col-9 sm:col-9 md:col-9 lg:col-9 xl:col-9">
+                                    <div class="field">
+                                        <label>Nombre</label>
+                                        <input type="text" pInputText class="w-full" value="{{_campusSeleccionado[0].Descripcion_campus}}" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-3 sm:col-3 md:col-3 lg:col-3 xl:col-3">
+                                    <div class="field">
+                                        <label>Estado</label>
+                                        <br>
+                                        <!-- <input type="text" pInputText class="w-full" value="{{_campusSeleccionado[0].Estado_campus}}" readonly /> -->
+                                        <span [class]="'estado-badge estado-' + _campusSeleccionado[0].Estado_campus">
+                                            {{_campusSeleccionado[0].Estado_campus}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid">
+                                <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                                    <div class="field">
+                                        <label>Archivos</label>
+                                        <p-table
+                                            [value]="_files"
+                                            [tableStyle]="{'min-width': '300px'}"
+                                        >
+                                        <ng-template pTemplate="body" let-file let-i="index" >
+                                            <tr>
+                                                <td style="min-width: 250px;">
+                                                    <tr>
+                                                        <td class="pr-3">
+                                                        <img width="40" src="https://repositorio.uv.cl/imagenes/extensions/{{file.nombre.toLowerCase() | fileExtension}}.png" style="margin: 0 auto" />
+                                                        </td>
+                                                        <td style="word-break: break-all">
+                                                        {{ file.nombre | lowercase | slice:0:15  }} {{ (file.nombre.length > 15 ) ? '... .pdf' : '' }}<br />
+                                                        <em class="small" style="color: gray"><i class="pi pi-file"></i> {{ file.extras.pesoDocumento | fileSize }}</em>
+                                                        </td>
+                                                    </tr>
+                                                </td>
+                                                <td>
+                                                    <textarea
+                                                        pInputTextarea
+                                                        maxLength="150"
+                                                        rows="2"
+                                                        cols="15"
+                                                        [autoResize]="true"
+                                                        [disabled]="true"
+                                                    >{{ file.extras.comentarios == '' ? 'N/A' : 'file.extras.comentarios' }}</textarea>
+                                                </td>
+                                                <td>
+                                                    <p-button
+                                                    styleClass="p-button-primary p-button-sm mr-2"
+                                                    icon="pi pi-download"
+                                                    label="Descargar"
+                                                    (click)="downloadArchivo(file)"
+                                                    >
+                                                    </p-button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </ng-container>
+
+                </ng-container>
+                
+
+                <!-- Pasos -->
+                <!-- <div class="card mt-4 mb-4">
+                    <p-steps [activeIndex]="active" [model]="items" />
+                </div> -->
+                
+
+                
+
+                
+
                 
             </div>
+                    
+                    <!-- Paso 0 -->
+                    <!-- <ng-container #step0 *ngIf="active === 0">
+                        <div class="grid">
+                            <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                                <div class="field">
+                                    <label>Nombre *</label>
+                                    <input 
+                                        type="text" 
+                                        pInputText 
+                                        formControlName="nombre" 
+                                        class="w-full" 
+                                        placeholder="Ingrese nombre de campus"
+                                        autofocus
+                                    />
+                                    <app-form-control
+                                    [control]="fbForm.controls['nombre']"
+                                    [validators]="['required']"
+                                    ></app-form-control>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex pt-4 justify-content-end">
+                            <p-button
+                                label="Siguiente" 
+                                icon="pi pi-arrow-right" 
+                                iconPos="right"
+                                [disabled]="!fbForm.controls['nombre'].valid"
+                                (click)="toStep1()" 
+                            />
+                        </div>
+                    </ng-container> -->
+                
+
+
+                <!-- <ng-container #step1 *ngIf="active === 1">
+
+                    <app-uploader-files
+                        [data]="campus" 
+                        [extrasDocs]="extrasDocs"
+                        (filesChange)="filesChanged($event)"
+                        (saveDoc)="saveDoc($event)"
+                    ></app-uploader-files>
+                
+                    <div class="flex pt-4 justify-content-between">
+                        <p-button
+                            label="Atrás" 
+                            icon="pi pi-arrow-left" 
+                            iconPos="left"
+                            (click)="toStep0()" 
+                        />
+                        <p-button
+                            label="Agregar"
+                            icon="pi pi-check"
+                            styleClass="mr-2 p-button-success p-button-sm"
+                            [disabled]="!fbForm.valid"
+                            (click)="dialog = false && fbForm.valid && submit()"
+                        ></p-button>
+                    </div>
+                </ng-container> -->
+                
+            
 
             <div footer>
                 <p-button
@@ -168,11 +267,12 @@
                 [text]="true"
                 ></p-button>
                 <p-button
+                *ngIf="mode == 'create' || mode == 'edit' "
                 label="Agregar"
                 icon="pi pi-check"
                 styleClass="mr-2 p-button-success p-button-sm"
                 [disabled]="!fbForm.valid"
-                (click)="dialog = false && fbForm.valid && submit()"
+                (click)="fbForm.valid && submit()"
                 ></p-button>
             </div>
             

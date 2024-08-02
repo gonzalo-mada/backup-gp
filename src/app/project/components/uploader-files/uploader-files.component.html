@@ -1,3 +1,4 @@
+<!-- Lo comentado corresponde al uploader que funciona con archivos pendientes/completados -->
 <div class="grid">
     <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
         <div class="field">
@@ -7,7 +8,7 @@
                 [customUpload]="true"
                 [multiple]="true"
                 (onSelect)="onSelect($event)"
-                (uploadHandler)="uploadHandler(uploader)"
+                (uploadHandler)="uploadHandler()"
                 accept="application/pdf"
             >
                 <ng-template pTemplate="header" let-chooseCallback="chooseCallback" let-uploadCallback="uploadCallback" let-clearCallback="clearCallback">
@@ -15,22 +16,22 @@
                         <div class="flex align-items-center justify-content-center m-1">
                             <p-button (click)="choose($event, chooseCallback)" icon="pi pi-plus" label="Seleccionar" styleClass="p-button-sm"  />
                         </div>
-                        <div class="flex align-items-center justify-content-center m-1">
+                        <!-- <div class="flex align-items-center justify-content-center m-1">
                             <p-button (click)="uploadEvent(uploadCallback)" icon="pi pi-upload" label="Cargar" styleClass="p-button-sm" [disabled]="!files || files.length === 0" pTooltip="Carga pendientes" />
-                        </div>
+                        </div> -->
                         <div class="flex align-items-center justify-content-center m-1">
-                            <p-button (click)="clearAllFiles(clearCallback)" icon="pi pi-times" label="Cancelar" styleClass="p-button-sm" severity="danger" [disabled]="!files || files.length === 0"  pTooltip="Elimina pendientes" />
+                            <p-button (click)="clearAllFiles(clearCallback)" icon="pi pi-trash" label="Limpiar" styleClass="p-button-sm" [disabled]="!files || files.length === 0"  pTooltip="Elimina pendientes" />
                         </div>
                     </div>
                 </ng-template>
 
                 <ng-template pTemplate="content"  let-removeFileCallback="removeFileCallback">
                     <div *ngIf="files.length > 0">
-                        <h5>Pendientes</h5>
-                        <p-table [value]="files" [tableStyle]="{'min-width': '300px'}" >
+                        <!-- <h5>Pendientes</h5> -->
+                        <p-table [value]="files" [tableStyle]="{'min-width': '18.75rem'}" >
                             <ng-template pTemplate="body" let-fileWithComment let-i="rowIndex">
                                 <tr>
-                                    <td style="min-width: 250px;">
+                                    <td style="min-width: 15rem;">
                                         <tr>
                                             <td class="pr-3">
                                             <img width="40" src="https://repositorio.uv.cl/imagenes/extensions/{{fileWithComment.file.name.toLowerCase() | fileExtension}}.png" style="margin: 0 auto" />
@@ -41,9 +42,9 @@
                                             </td>
                                         </tr>
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <p-badge value="Pendiente" severity="warning" />
-                                    </td>
+                                    </td> -->
                                     <td>
 
                                         <textarea 
@@ -73,7 +74,7 @@
                         </p-table>
                     </div>
 
-                    <div *ngIf="uploadedFiles.length > 0">
+                    <!-- <div *ngIf="uploadedFiles.length > 0">
                         <h5>Completados: {{ uploadedFiles.length }}</h5>
                         <p-table [value]="uploadedFiles" [tableStyle]="{'min-width': '300px'}" >
                             <ng-template pTemplate="body" let-file let-i="index" >
@@ -106,7 +107,7 @@
                                 </tr>
                             </ng-template>
                         </p-table>
-                    </div>
+                    </div> -->
                 </ng-template>
 
                 <ng-template pTemplate="file"></ng-template>

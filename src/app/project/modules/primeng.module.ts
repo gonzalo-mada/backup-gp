@@ -14,6 +14,8 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { BadgeModule } from 'primeng/badge';
 
+import { StepsModule } from 'primeng/steps';
+
 @NgModule({
   declarations: [],
   providers: [ConfirmationService, MessageService],
@@ -30,7 +32,8 @@ import { BadgeModule } from 'primeng/badge';
     InputTextareaModule,
     TableModule,
     ToastModule,
-    ToolbarModule
+    ToolbarModule,
+    StepsModule
   ],
   exports: [
     CommonModule,
@@ -45,7 +48,8 @@ import { BadgeModule } from 'primeng/badge';
     InputTextareaModule,
     TableModule,
     ToastModule,
-    ToolbarModule
+    ToolbarModule,
+    StepsModule
   ],
 })
 export class PrimengModule {}
