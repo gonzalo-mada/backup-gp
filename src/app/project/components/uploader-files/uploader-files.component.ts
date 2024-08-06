@@ -13,7 +13,7 @@ export interface file{
 }
 
 export interface extras{
-  idCampus?: string;
+  Cod_campus?: string;
     nombreCampus?: string;
     pesoDocumento: number;
     comentarios: string;
@@ -67,7 +67,7 @@ export class UploaderFilesComponent implements OnChanges {
       this.uploadHandler();
     }
     if (changes['files'] && this.files) {
-      console.log("¿¿¿¿¿¿¿FILES",this.files);
+      // console.log("¿¿¿¿¿¿¿FILES",this.files);
       
     }
   }

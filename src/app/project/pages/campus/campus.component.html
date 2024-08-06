@@ -14,6 +14,7 @@
             <app-menu-buttons-table
                 (clickOpenNew)="openCreate()"
                 (clickDeletededSelected)="openDeleteSelectedCampus($event)"
+                [selectedRows]="selectedRows"
                 
             ></app-menu-buttons-table>
 
@@ -22,9 +23,9 @@
                 [cols]="cols"
                 [globalFiltros]="globalFiltros"
                 [dataKeyTable]="dataKeyTable"
-                [triggerSelected]="triggerSelected"
                 (refreshTable)="getCampuses()"
                 (actionMode)="actionMode($event)"
+                (actionSelectRow)="actionSelectRow($event)"
             ></app-table-campus>
 
         </app-card>

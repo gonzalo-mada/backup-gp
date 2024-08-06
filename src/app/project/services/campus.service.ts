@@ -70,7 +70,7 @@ export class CampusService {
     return await this.invoker.httpInvoke(
         'campus/getDocumentosCampus',
         {
-          idCampus: Cod_campus,
+          Cod_campus: Cod_campus,
         }
     );
   }
@@ -79,7 +79,7 @@ export class CampusService {
     return await this.invoker.httpInvoke(
         'campus/getDocumentosWithBinaryCampus',
         {
-          idCampus: Cod_campus,
+          Cod_campus: Cod_campus,
         }
     );
   }
@@ -105,9 +105,9 @@ export class CampusService {
 
   async deleteCampus(Cod_campus: string){
     return await this.invoker.httpInvoke(
-      'campus/deleteDocs',
+      'campus/deleteCampusSingular',
         {
-          idCampus: Cod_campus,
+          Cod_campus: Cod_campus,
         }
       );
     }

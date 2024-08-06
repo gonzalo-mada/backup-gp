@@ -4,6 +4,7 @@
         label="Eliminar seleccionados"
         icon="pi pi-trash"
         styleClass="p-button-danger p-button-outlined p-button-sm"
+        [disabled]="disabled"
         (click)="deleteSelected()"
         ></p-button>
     </div>

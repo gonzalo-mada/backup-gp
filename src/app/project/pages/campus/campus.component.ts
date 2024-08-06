@@ -37,6 +37,7 @@ export class CampusComponent implements OnInit {
   mode: string = '';
   extrasDocs : any = {};
   _files: any[] = [];
+  selectedRows: any[] = [];
 
   public fbForm : FormGroup = this.fb.group({
     Estado_campus: [true, Validators.required],
@@ -446,20 +447,44 @@ export class CampusComponent implements OnInit {
     }
   }
 
-  openDeleteSelectedCampus(event: any){
-    console.log("event",event);
-    
-    if ( event === false && this.triggerSelected == false ) {
-      console.log("caso 1");
+  openDeleteSelectedCampus(campusSelected: Campus[]){
+
+    // console.log("campus seleccionados",campusSelected);
+    let nombresCampusSelected = []; 
+
+    for (let i = 0; i < campusSelected.length; i++) {
+      const campus = campusSelected[i];
+      nombresCampusSelected.push(campus.Descripcion_campus)
       
-      this.triggerSelected = true
-    }else if( event === false && this.triggerSelected == true){
-      console.log("caso 2");
-      this.triggerSelected = false
-    }else{
-      console.log("caso 3");
-      this.triggerSelected = true
     }
+    
+    console.log(nombresCampusSelected);
+    let message = '' ;
+
+    if (nombresCampusSelected.length == 1) {
+      message = `el campus: <b>${nombresCampusSelected}</b>`;
+    } else {
+      let nombresConSeparador = nombresCampusSelected.join(', ');
+      message = `los campus: <b>${nombresConSeparador}</b>`;
+    }
+
+    console.log("message",message);
+    
+    this.confirmationService.confirm({
+      message: `Es necesario confirmar la acción para eliminar ${message}. ¿Desea continuar?`,
+      acceptLabel: 'Eliminar',
+      acceptIcon: 'pi pi-trash mr-1',
+      rejectLabel: 'Cancelar',
+      key: 'campus',
+      acceptButtonStyleClass: 'p-button-danger p-button-sm',
+      rejectButtonStyleClass: 'p-button-secondary p-button-text p-button-sm',
+      accept: async () => {
+        
+        
+      }
+    })
+    
+  
 
   }
  
@@ -482,6 +507,11 @@ export class CampusComponent implements OnInit {
       break;
 
     }
+    
+  }
+
+  actionSelectRow(event: any){
+    this.selectedRows = event
     
   }
 

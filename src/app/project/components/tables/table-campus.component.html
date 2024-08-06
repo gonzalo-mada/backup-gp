@@ -11,6 +11,7 @@
     [globalFilterFields]="globalFiltros"
     [(selection)]="selectedCampus"
     [dataKey]="dataKeyTable"
+    (selectionChange)="selectedRows($event)"
 
 >
     <ng-template pTemplate="caption">

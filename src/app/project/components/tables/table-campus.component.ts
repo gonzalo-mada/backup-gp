@@ -15,11 +15,12 @@ export class TableCampusComponent implements OnChanges {
   @Input() cols : any;
   @Input() globalFiltros : any;
   @Input() dataKeyTable : any;
-  @Input() triggerSelected : any;
+
 
   @Output() refreshTable = new EventEmitter<any>();
   @Output() actionMode = new EventEmitter<any>();
   @Output() deleteSelectedCampus = new EventEmitter<any>();
+  @Output() actionSelectRow = new EventEmitter<any>();
 
   // @Output() selectedCampus: EventEmitter<Campus> = new EventEmitter<Campus>();
 
@@ -29,6 +30,7 @@ export class TableCampusComponent implements OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges): void {
+
     if (changes['data'] && changes['data'].currentValue) {
       // console.log("data from onchanges:", this.data);
       
@@ -36,10 +38,7 @@ export class TableCampusComponent implements OnChanges {
     if (changes['dataKeyTable'] && changes['dataKeyTable'].currentValue) {
       // console.log("dataKeyTable from onchanges:", this.dataKeyTable);
     }
-    if (changes['triggerSelected'] && changes['triggerSelected'].currentValue) {
-      console.log("triggerSelected from onchanges:", this.triggerSelected);
-      this.triggerSelectedFunction()
-    }
+
   }
 
   onGlobalFilter(table: Table, event: Event) {
@@ -65,9 +64,9 @@ export class TableCampusComponent implements OnChanges {
     this.actionMode.emit({data: campus , mode: this.mode})
   }
 
-  triggerSelectedFunction(){
-    console.log("this.selectedCampus",this.selectedCampus);
-    
+
+  selectedRows(event: any){
+    this.actionSelectRow.emit(event);
   }
 
   
