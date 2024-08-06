@@ -9,7 +9,7 @@
     [value]="data"
     [columns]="cols"
     [globalFilterFields]="globalFiltros"
-    [(selection)]="selectedValue"
+    [(selection)]="selectedCampus"
     [dataKey]="dataKeyTable"
 
 >
@@ -74,9 +74,12 @@
             </td>
             <td style="width:50%; min-width:10rem;">
                 <span class="p-column-title">Estado</span>
-                <span [class]="'estado-badge estado-' + campus.Estado_campus">
-                    {{campus.Estado_campus}}
-                </span>
+                <ng-container *ngIf="campus.Estado_campus == true">
+                    <span class="estado-badge estado-activo">activo</span>
+                </ng-container>
+                <ng-container *ngIf="campus.Estado_campus == false">
+                    <span class="estado-badge estado-desactivo">desactivo</span>
+                </ng-container>
             </td>
             <td>
                 <div class="flex">
@@ -84,6 +87,7 @@
                         icon="pi pi-trash"
                         styleClass="p-button-sm p-button-danger mr-2"
                         pTooltip="Eliminar registro"
+                        (click)="delete(campus)"
                     ></p-button>
                     <p-button
                         icon="pi pi-pencil"

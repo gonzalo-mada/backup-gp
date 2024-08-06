@@ -15,6 +15,8 @@ export class CampusService {
   }
 
   async saveDocs(docs: any){
+    console.log("docs from service saveDocs",docs);
+    
     return await this.invoker.httpInvoke(
       {
         service: 'campus/saveDocs',
@@ -25,8 +27,29 @@ export class CampusService {
         nombre: docs.nombre,
         archivo: docs.archivo,
         tipo: docs.tipo,
-        idCampus: docs.extras.idCampus,
-        nombreCampus: docs.extras.nombreCampus,
+        Cod_campus: docs.extras.Cod_campus,
+        Descripcion_campus: docs.extras.Descripcion_campus,
+        pesoDocumento: docs.extras.pesoDocumento,
+        comentarios: docs.extras.comentarios,
+      }
+    );
+  }
+
+  async updateDocs(docs: any){   
+    console.log("docs from service updateDocs",docs);
+    return await this.invoker.httpInvoke(
+      {
+        service: 'campus/updateDocs',
+        retry: 0,
+        timeout: 30000
+      },
+      {
+        id: docs.id,
+        nombre: docs.nombre,
+        dataBase64: docs.dataBase64,
+        tipo: docs.tipo,
+        Cod_campus: docs.extras.Cod_campus,
+        Descripcion_campus: docs.extras.Descripcion_campus,
         pesoDocumento: docs.extras.pesoDocumento,
         comentarios: docs.extras.comentarios,
       }
@@ -37,11 +60,35 @@ export class CampusService {
     return await this.invoker.httpInvoke('campus/insertCampus',campus);
   }
 
+  async updateCampus(campus: Campus){
+    return await this.invoker.httpInvoke('campus/updateCampus',campus);
+  }
+
+ 
+
   async getDocumentosCampus(Cod_campus: string) {
     return await this.invoker.httpInvoke(
         'campus/getDocumentosCampus',
         {
           idCampus: Cod_campus,
+        }
+    );
+  }
+
+  async getDocumentosWithBinaryCampus(Cod_campus: string) {
+    return await this.invoker.httpInvoke(
+        'campus/getDocumentosWithBinaryCampus',
+        {
+          idCampus: Cod_campus,
+        }
+    );
+  }
+  
+  async deleteDocCampus(Cod_campus: string) {
+    return await this.invoker.httpInvoke(
+        'campus/deleteDocCampus',
+        {
+          Cod_campus: Cod_campus,
         }
     );
   }
@@ -56,12 +103,14 @@ export class CampusService {
     );
   }
 
-  // getCampus(): Observable<any> {
-  //   return this.http.get<any>('assets/data/campus.json')
-  //   .pipe(
-  //     tap( response => console.log("response",response)),
-  //     map( response => response.data),
-  //     tap( response => console.log("response2",response)),
-  //   )
-  // }
+  async deleteCampus(Cod_campus: string){
+    return await this.invoker.httpInvoke(
+      'campus/deleteDocs',
+        {
+          idCampus: Cod_campus,
+        }
+      );
+    }
+
+
 }

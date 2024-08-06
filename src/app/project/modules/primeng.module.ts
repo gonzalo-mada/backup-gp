@@ -15,6 +15,10 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { BadgeModule } from 'primeng/badge';
 
 import { StepsModule } from 'primeng/steps';
+import { SelectButtonModule  } from 'primeng/selectbutton';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 @NgModule({
   declarations: [],
@@ -27,12 +31,16 @@ import { StepsModule } from 'primeng/steps';
     CardModule,
     //primeng gp
     BadgeModule,
+    ConfirmDialogModule,
+    ConfirmPopupModule,
     DialogModule,
     FileUploadModule,
     InputTextareaModule,
+    InputSwitchModule,
     TableModule,
     ToastModule,
     ToolbarModule,
+    SelectButtonModule,
     StepsModule
   ],
   exports: [
@@ -43,12 +51,16 @@ import { StepsModule } from 'primeng/steps';
     CardModule,
     //primeng gp
     BadgeModule,
+    ConfirmDialogModule,
+    ConfirmPopupModule,
     DialogModule,
     FileUploadModule,
     InputTextareaModule,
+    InputSwitchModule,
     TableModule,
     ToastModule,
     ToolbarModule,
+    SelectButtonModule,
     StepsModule
   ],
 })

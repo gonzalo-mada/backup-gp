@@ -3,6 +3,34 @@ import { FileUpload } from 'primeng/fileupload';
 import { FileUtils } from '../../tools/utils/file.utils';
 import { MessageService } from 'primeng/api';
 
+
+export interface file{
+  id?: string;
+  nombre: string;
+  tipo: string;
+  fechaCreacion?: string;
+  fechaModificacion?: string;
+}
+
+export interface extras{
+  idCampus?: string;
+    nombreCampus?: string;
+    pesoDocumento: number;
+    comentarios: string;
+}
+
+export interface docMongoCampus{
+  id?: string;
+  nombre: string;
+  tipo: string;
+  fechaCreacion?: string;
+  fechaModificacion?: string;
+  dataBase64?: string;
+  extras: extras
+  origFile: File
+}
+
+
 @Component({
   selector: 'app-uploader-files',
   templateUrl: './uploader-files.component.html',
@@ -18,19 +46,29 @@ export class UploaderFilesComponent implements OnChanges {
 
   
 
-  @Input() files: { file: File; comment: string; uploaded: boolean }[] = [];
+  // @Input() files: { file: File; comment: string; uploaded: boolean }[] = [];
+  @Input() files: docMongoCampus[] = [];
   @Input() data: any ;
   @Input() extrasDocs: any ;
   @Input() triggerUpload : boolean = false;
 
-  @Output() filesChange = new EventEmitter<{ files: any[], uploadedFiles: any[] }>();
-  @Output() saveDoc = new EventEmitter<any>();
+  // @Output() filesChange = new EventEmitter<{ files: any[], uploadedFiles: any[] }>();
+  @Output() filesChange = new EventEmitter<any>();
+  @Output() saveOrUpdateDoc = new EventEmitter<any>();
+  @Output() deleteDoc = new EventEmitter<any>();
 
   uploadedFiles: any[] = [];
+  filesOriginal: any[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['triggerUpload'] && this.triggerUpload) {
+      console.log("cambio trigger",this.triggerUpload);
+      
       this.uploadHandler();
+    }
+    if (changes['files'] && this.files) {
+      console.log("¿¿¿¿¿¿¿FILES",this.files);
+      
     }
   }
 
@@ -38,41 +76,75 @@ export class UploaderFilesComponent implements OnChanges {
 
     // Lista temporal para almacenar archivos sin duplicados
     const uniqueFiles = event.currentFiles.filter((newFile: any) => {
-      return !this.files.some(fileWithComment => fileWithComment.file.name === newFile.name);
+      return !this.files.some(fileWithComment => fileWithComment.nombre === newFile.name);
     });
 
     // Agregar nuevos archivos con un comentario vacío
-    uniqueFiles.forEach((newFile: any) => {
-      this.files.push({ file: newFile, comment: '', uploaded: false });
+    // uniqueFiles.forEach((newFile: any) => {
+    //   this.files.push({ file: newFile, extras.comentarios: '', uploaded: false });
+    // });
+
+    uniqueFiles.forEach((newFile: File) => {
+      // console.log(newFile.);
+      
+      this.files.push({nombre: newFile.name , tipo: newFile.type, extras:{pesoDocumento: newFile.size ,comentarios:''} , origFile: newFile});
     });
 
-    this.filesChange.emit({ files: this.files, uploadedFiles: this.uploadedFiles })
+    // console.log("this.files", this.files);
+    
+    this.filesChange.emit(this.files)
 
   }
 
   async uploadHandler(){
+
+
     
     for (let i = 0; i < this.files.length; i++) {
-      let file: any = await this.fileUtils.onSelectFile(this.files[i].file);
+      const doc = this.files[i];
+      if (!doc.id) {
+        //modo subir nuevo archivo
+        
 
-      const extras = {
-        pesoDocumento: this.files[i].file.size,
-        comentarios: this.files[i].comment
-      };
+        let file: any = await this.fileUtils.onSelectFile(doc.origFile);
 
-      const combinedExtras = {
-        ...this.extrasDocs,
-        ...extras
+        const extras = {
+          pesoDocumento: doc.extras.pesoDocumento,
+          comentarios: doc.extras.comentarios
+        };
+        const combinedExtras = {
+          ...this.extrasDocs,
+          ...extras
+        }
+        let documento: any = {
+          nombre: `${file.filename}.${file.format}`,
+          archivo: file.binary,
+          tipo: file.format,
+          extras: combinedExtras,
+        };
+
+        this.saveOrUpdateDoc.emit(documento);
+      }else{
+        //modo actualizar archivo
+        const extras = {
+          pesoDocumento: doc.extras.pesoDocumento,
+          comentarios: doc.extras.comentarios
+        };
+        const combinedExtras = {
+          ...this.extrasDocs,
+          ...extras
+        }
+        
+        let documento: any = {
+          id: doc.id,
+          nombre: `${doc.nombre}`,
+          dataBase64: doc.dataBase64,
+          tipo: doc.tipo,
+          extras: combinedExtras,
+        };
+        this.saveOrUpdateDoc.emit(documento);
       }
-
-      let documento: any = {
-        nombre: `${file.filename}.${file.format}`,
-        archivo: file.binary,
-        tipo: file.format,
-        extras: combinedExtras,
-      };
       
-      this.saveDoc.emit(documento);
       //Para archivos completados
       // this.uploadedFiles.push(documento);
 
@@ -83,7 +155,7 @@ export class UploaderFilesComponent implements OnChanges {
 
 
     // this.files = [];
-    this.filesChange.emit({ files: this.files, uploadedFiles: this.uploadedFiles })
+    this.filesChange.emit(this.files)
 
 
   }
@@ -99,17 +171,34 @@ export class UploaderFilesComponent implements OnChanges {
   clearAllFiles(clearCallback: any){
     this.files = [];
     clearCallback();
-    this.filesChange.emit({ files: this.files, uploadedFiles: this.uploadedFiles })
+    this.filesChange.emit(this.files)
   }
 
   onCommentChange(index: number, comment: string) {
-    this.files[index].comment = comment;
+    this.files[index].extras.comentarios = comment;
   }
 
-  onRemoveTemplatingFile(file: File, uploader: FileUpload, index: number) {
-    uploader.files = uploader.files.filter((f) => f != file);
-    this.files.splice(index, 1);
-    this.filesChange.emit({ files: this.files, uploadedFiles: this.uploadedFiles })
+  onRemoveTemplatingFile(file: any, uploader: FileUpload, index: number) {
+    if (file.id) {
+      //eliminar de mongo
+      this.deleteDoc.emit(file)
+
+      //TODO: ELIMINAR ARCHIVO DE MEMORIA CUANDO SE ELIMINE EFECTIVAMENTE DE MONGODB
+      // this.files.splice(index, 1);
+
+    }else{
+      //eliminar de memoria navegador
+      uploader.files = uploader.files.filter((f) => f != file.origFile);
+      this.files.splice(index, 1);
+    }
+    // console.log("file from onremove",file);
+    // console.log("num archivos uploader from onremove",uploader._files.length);
+    // console.log("index from onremove",index);
+    // console.log("this.files from onremove",this.files);
+    
+    // uploader.files = uploader.files.filter((f) => f != file);
+    // this.files.splice(index, 1);
+    this.filesChange.emit(this.files)
 
   }
 

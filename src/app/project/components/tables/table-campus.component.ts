@@ -8,33 +8,37 @@ import { Campus } from '../../models/Campus';
   styles: [
   ]
 })
-export class TableCampusComponent implements OnInit, OnChanges {
+export class TableCampusComponent implements OnChanges {
   
 
   @Input() data : any;
   @Input() cols : any;
   @Input() globalFiltros : any;
   @Input() dataKeyTable : any;
+  @Input() triggerSelected : any;
 
   @Output() refreshTable = new EventEmitter<any>();
-  @Output() activeEditMode = new EventEmitter<any>();
-  @Output() selectedCampus: EventEmitter<Campus> = new EventEmitter<Campus>();
+  @Output() actionMode = new EventEmitter<any>();
+  @Output() deleteSelectedCampus = new EventEmitter<any>();
 
-  selectedValue: {} = {} ;
+  // @Output() selectedCampus: EventEmitter<Campus> = new EventEmitter<Campus>();
 
-  ngOnInit(): void {
-    console.log("data cols:", this.cols);
-    console.log("data:", this.data);
-  }
+  selectedCampus: Campus[] = [] ;
+  mode : string = '';
+
+
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['data'] && changes['data'].currentValue) {
-      console.log("data from onchanges:", this.data);
+      // console.log("data from onchanges:", this.data);
       
     }
     if (changes['dataKeyTable'] && changes['dataKeyTable'].currentValue) {
-      console.log("dataKeyTable from onchanges:", this.dataKeyTable);
-      
+      // console.log("dataKeyTable from onchanges:", this.dataKeyTable);
+    }
+    if (changes['triggerSelected'] && changes['triggerSelected'].currentValue) {
+      console.log("triggerSelected from onchanges:", this.triggerSelected);
+      this.triggerSelectedFunction()
     }
   }
 
@@ -46,15 +50,28 @@ export class TableCampusComponent implements OnInit, OnChanges {
     this.refreshTable.emit();
   }
 
-  edit(data: any){
-    // console.log("data",data);
-    this.activeEditMode.emit(data);
-    
+  edit(campus: Campus){
+    this.mode = 'edit';
+    this.actionMode.emit({data: campus , mode: this.mode})
   }
 
   show(campus: Campus){
-    this.selectedCampus.emit(campus);
+    this.mode = 'show';
+    this.actionMode.emit({data: campus , mode: this.mode})
   }
+
+  delete(campus: Campus){
+    this.mode = 'delete';
+    this.actionMode.emit({data: campus , mode: this.mode})
+  }
+
+  triggerSelectedFunction(){
+    console.log("this.selectedCampus",this.selectedCampus);
+    
+  }
+
+  
+
 
 
 

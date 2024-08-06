@@ -29,22 +29,32 @@
                     <div *ngIf="files.length > 0">
                         <!-- <h5>Pendientes</h5> -->
                         <p-table [value]="files" [tableStyle]="{'min-width': '18.75rem'}" >
-                            <ng-template pTemplate="body" let-fileWithComment let-i="rowIndex">
+                            <ng-template pTemplate="body" let-fileWithExtras let-i="rowIndex">
                                 <tr>
                                     <td style="min-width: 15rem;">
                                         <tr>
                                             <td class="pr-3">
-                                            <img width="40" src="https://repositorio.uv.cl/imagenes/extensions/{{fileWithComment.file.name.toLowerCase() | fileExtension}}.png" style="margin: 0 auto" />
+                                            <img width="40" src="https://repositorio.uv.cl/imagenes/extensions/{{fileWithExtras.nombre.toLowerCase() | fileExtension}}.png" style="margin: 0 auto" />
                                             </td>
                                             <td style="word-break: break-all">
-                                            {{ fileWithComment.file.name | lowercase | slice:0:15  }} {{ (fileWithComment.file.name.length > 15 ) ? '... .pdf' : '' }}<br />
-                                            <em class="small" style="color: gray"><i class="pi pi-file"></i> {{ fileWithComment.file.size | fileSize }}</em>
+                                            {{ fileWithExtras.nombre | lowercase | slice:0:15  }} {{ (fileWithExtras.nombre.length > 15 ) ? '... .pdf' : '' }}<br />
+                                            <em class="small" style="color: gray"><i class="pi pi-file"></i> {{ fileWithExtras.extras.pesoDocumento | fileSize }}</em>
                                             </td>
                                         </tr>
                                     </td>
-                                    <!-- <td>
-                                        <p-badge value="Pendiente" severity="warning" />
-                                    </td> -->
+
+                                    <ng-container *ngIf="fileWithExtras.id else newDeb" >
+                                        <td>
+                                            <p-badge value="Completado" severity="success" />
+                                        </td>
+                                    </ng-container>
+                                    <ng-template #newDeb>
+                                        <td>
+                                            <p-badge value="Pendiente" severity="warning" />
+                                        </td>
+                                    </ng-template>
+
+                                    
                                     <td>
 
                                         <textarea 
@@ -54,7 +64,7 @@
                                             rows="2"
                                             cols="15"
                                             [autoResize]="true"
-                                            [(ngModel)]="fileWithComment.comment"
+                                            [(ngModel)]="fileWithExtras.extras.comentarios"
                                             (ngModelChange)="onCommentChange(i, $event)"
                                         ></textarea>
                                         
@@ -65,7 +75,7 @@
                                             class="p-button-sm p-button-outlined p-button-secondary"
                                             pTooltip="Quitar documento"
                                             icon="pi pi-trash"
-                                            (click)="onRemoveTemplatingFile(fileWithComment.file, uploader, i)"
+                                            (click)="onRemoveTemplatingFile(fileWithExtras, uploader, i)"
                                             pTooltip="Eliminar"
                                         ></button>
                                     </td>

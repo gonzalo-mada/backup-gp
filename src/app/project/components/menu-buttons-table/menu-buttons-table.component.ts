@@ -8,10 +8,20 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class MenuButtonsTableComponent {
 
-  @Output() clickOpenNew: EventEmitter<any> = new EventEmitter();
+  onClick : boolean = false;
 
-  onClickOpenNew(){
+  @Output() clickOpenNew: EventEmitter<any> = new EventEmitter();
+  @Output() clickDeletededSelected: EventEmitter<any> = new EventEmitter();
+
+  openNew(){
     this.clickOpenNew.emit();
   }
+
+  deleteSelected(){
+    this.clickDeletededSelected.emit(this.onClick)
+    
+  }
+
+
 
 }
