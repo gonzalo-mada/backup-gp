@@ -14,6 +14,18 @@ export class CampusService {
     return await this.invoker.httpInvoke('campus/getCampus');
   }
 
+  async insertCampus(campus: Campus){
+    return await this.invoker.httpInvoke('campus/insertCampus',campus);
+  }
+
+  async updateCampus(campus: Campus){
+    return await this.invoker.httpInvoke('campus/updateCampus',campus);
+  }
+
+  async deleteCampus(campusToDelete: Campus[]){   
+    return await this.invoker.httpInvoke('campus/deleteCampus',{campusToDelete: campusToDelete});
+  }
+
   async saveDocs(docs: any){
     console.log("docs from service saveDocs",docs);
     
@@ -56,16 +68,6 @@ export class CampusService {
     );
   }
 
-  async insertCampus(campus: Campus){
-    return await this.invoker.httpInvoke('campus/insertCampus',campus);
-  }
-
-  async updateCampus(campus: Campus){
-    return await this.invoker.httpInvoke('campus/updateCampus',campus);
-  }
-
- 
-
   async getDocumentosCampus(Cod_campus: string) {
     return await this.invoker.httpInvoke(
         'campus/getDocumentosCampus',
@@ -103,14 +105,8 @@ export class CampusService {
     );
   }
 
-  async deleteCampus(Cod_campus: string){
-    return await this.invoker.httpInvoke(
-      'campus/deleteCampusSingular',
-        {
-          Cod_campus: Cod_campus,
-        }
-      );
-    }
+
+  
 
 
 }

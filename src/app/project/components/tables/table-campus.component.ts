@@ -59,9 +59,17 @@ export class TableCampusComponent implements OnChanges {
     this.actionMode.emit({data: campus , mode: this.mode})
   }
 
-  delete(campus: Campus){
-    this.mode = 'delete';
-    this.actionMode.emit({data: campus , mode: this.mode})
+  changeState(campus: Campus , estado_campus: boolean){
+    if (estado_campus === true) {
+      //modo eliminar
+      this.mode = 'delete';
+      this.actionMode.emit({data: campus , mode: this.mode})
+    }else{
+      //modo activar
+      this.mode = 'activate';
+      this.actionMode.emit({data: campus , mode: this.mode})
+    }
+    
   }
 
 

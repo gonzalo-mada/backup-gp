@@ -30,12 +30,6 @@
             </div>
             <div>
                 <p-button
-                styleClass="p-button-danger p-button-sm mr-2"
-                icon="pi pi-file-pdf"
-                label="Descargar"
-                >
-                </p-button>
-                <p-button
                 pRipple
                 label="Actualizar"
                 icon="pi pi-refresh"
@@ -84,12 +78,15 @@
             </td>
             <td>
                 <div class="flex">
+                    <!-- (click)="campus.Estado_campus ? delete(campus) : reactivate(campus)" -->
                     <p-button
-                        icon="pi pi-trash"
-                        styleClass="p-button-sm p-button-danger mr-2"
-                        pTooltip="Eliminar registro"
-                        (click)="delete(campus)"
+                        *ngIf="campus.Estado_campus !== undefined"
+                        [icon]="campus.Estado_campus ? 'pi pi-trash' : 'pi pi-check'"
+                        [styleClass]="campus.Estado_campus ? 'p-button-sm p-button-danger mr-2' : 'p-button-sm p-button-success mr-2'"
+                        [pTooltip]="campus.Estado_campus ? 'Eliminar o desactivar registro' : 'Activar registro'"
+                        (click)="changeState(campus , campus.Estado_campus)"
                     ></p-button>
+
                     <p-button
                         icon="pi pi-pencil"
                         styleClass="p-button-sm p-button-warning mr-2"

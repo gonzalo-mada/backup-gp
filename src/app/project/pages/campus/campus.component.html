@@ -3,7 +3,10 @@
   key="campus"
   [style]="{ width: '500px' }"
 ></p-confirmDialog>
-
+<p-confirmDialog
+  key="campusUpdateByDeleted"
+  [style]="{ width: '500px' }"
+></p-confirmDialog>
 <div class="grid">
     <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
         <app-card 
@@ -47,9 +50,6 @@
                         <span class="text-xl">Ver campus</span>
                     </ng-container>
 
-                    <ng-container *ngSwitchCase="'delete'">
-                        <span class="text-xl">Eliminar campus</span>
-                    </ng-container>
 
                 </ng-container>
             </div>
@@ -151,10 +151,6 @@
                         </form>
                     </ng-container>
 
-                    <ng-container *ngSwitchCase="'delete'">
-                        <label>¿Está seguro de esta acción?</label>
-                    </ng-container>
-
                     <!-- mode create / edit  -->
                     <ng-container *ngSwitchDefault>
                         <div class="grid">
@@ -221,6 +217,7 @@
                 (click)="dialog = false"
                 [text]="true"
                 ></p-button>
+                
                 <p-button
                 *ngIf="mode == 'create' || mode == 'edit' "
                 [label]="mode === 'edit' ? 'Actualizar' : 'Guardar'"
@@ -228,13 +225,6 @@
                 styleClass="mr-2 p-button-success p-button-sm"
                 [disabled]="!fbForm.valid"
                 (click)="fbForm.valid && submit()"
-                ></p-button>
-                <p-button
-                *ngIf="mode == 'delete'"
-                label="Eliminar"
-                icon="pi pi-check"
-                styleClass="mr-2 p-button-danger p-button-sm"
-                (click)="deleteSelected(campus)"
                 ></p-button>
             </div>
             

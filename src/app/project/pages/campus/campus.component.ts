@@ -139,17 +139,158 @@ export class CampusComponent implements OnInit {
   }
 
   async openDelete(campus: any){
-    this.mode = 'delete'
-    this.campus = {...campus}
-    this.dialog = true;
-    // this.loadFiles(this.campus)
+    this.confirmationService.confirm({
+      header: 'Confirmar',
+      message: `Es necesario confirmar la acción para eliminar el campus <b>${campus.Descripcion_campus}</b>. ¿Desea confirmar?`,
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      icon: 'pi pi-exclamation-triangle',
+      key: 'campus',
+      acceptButtonStyleClass: 'p-button-danger p-button-sm',
+      rejectButtonStyleClass: 'p-button-secondary p-button-text p-button-sm',
+      accept: async () => {
+          let campusToDelete = []
+          campusToDelete.push(campus);
+
+          try {
+
+            let res = await this.deleteCampus(campusToDelete);
+            if ( res.deleted.length != 0 ) {
+              //hubo eliminacion
+              this.messageService.add({
+                key: 'campus',
+                severity: 'success',
+                detail: `Campus ${res.deleted[0].Descripcion_campus} eliminado exitosamente`,
+              });
+              this.getCampuses()
+            }else{
+              // no hubo eliminacion
+              let campusNotDeleted = res.notDeleted[0];
+              this.updateCampusByDeletedCampus(campusNotDeleted);
+              
+            }
+            
+            
+          } catch (error) {
+            this.errorTemplateHandler.processError(error, {
+              notifyMethod: 'alert',
+              message: 'Hubo un error al eliminar el campus. Intente nuevamente.',
+            });
+          } 
+          
+      }
+    })
   }
 
+  async openActivate(campus: any){
+    
+    this.confirmationService.confirm({
+      header: 'Confirmar',
+      message: `Es necesario confirmar la acción para activar el campus <b>${campus.Descripcion_campus}</b>. ¿Desea confirmar?`,
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      icon: 'pi pi-exclamation-triangle',
+      key: 'campus',
+      acceptButtonStyleClass: 'p-button-success p-button-sm',
+      rejectButtonStyleClass: 'p-button-secondary p-button-text p-button-sm',
+      accept: async () => {
+        try {
+        
+          await this.cargarDocumentos(campus.Cod_campus)
+
+          if (this._files.length != 0 ) {
+            const updatedCampus = {
+              Cod_campus: campus.Cod_campus,
+              Descripcion_campus: campus.Descripcion_campus,
+              Estado_campus: campus.Estado_campus === false ? campus.Estado_campus = true : campus.Estado_campus
+            }
+            await this.campusService.updateCampus( updatedCampus )
+            this.messageService.add({
+              key: 'campus',
+              severity: 'success',
+              detail: `Campus ${updatedCampus.Descripcion_campus} activado exitosamente`,
+            });
+          }else{
+            this.messageService.add({
+              key: 'campus',
+              severity: 'error',
+              detail: `Campus ${campus.Descripcion_campus} no es posible activarlo sin archivos REXE.`,
+            });
+          }
+
+
+          
+          
+          this.getCampuses();
+          
+        } catch (error) {
+          this.errorTemplateHandler.processError(error, {
+            notifyMethod: 'alert',
+            message: 'Hubo un error al activar el campus. Intente nuevamente.',
+          });
+        }
+          
+      }
+    })
+  }
+
+  async updateCampusByDeletedCampus(campus: any){
+    this.confirmationService.confirm({
+      header: 'Desactivar',
+      message: `El campus <b>${campus.Descripcion_campus}</b> está en uso por lo que no es posible eliminar. ¿Desea desactivar?`,
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      icon: 'pi pi-exclamation-triangle',
+      key: 'campusUpdateByDeleted',
+      acceptButtonStyleClass: 'p-button-danger p-button-sm',
+      rejectButtonStyleClass: 'p-button-secondary p-button-text p-button-sm',
+      accept: async () => {
+          try {
+            const updatedCampus = {
+              Cod_campus: campus.Cod_campus,
+              Descripcion_campus: campus.Descripcion_campus,
+              Estado_campus: campus.Estado_campus === true ? campus.Estado_campus = false : campus.Estado_campus
+            }
+            await this.campusService.updateCampus( updatedCampus )
+            this.messageService.add({
+              key: 'campus',
+              severity: 'success',
+              detail: `Campus ${updatedCampus.Descripcion_campus} desactivado exitosamente`,
+            });
+            this.getCampuses();
+            
+          } catch (error) {
+            this.errorTemplateHandler.processError(error, {
+              notifyMethod: 'alert',
+              message: 'Hubo un error al desactivar el campus. Intente nuevamente.',
+            });
+          }
+          
+      }
+    })
+  }
+
+
+
+  async deleteCampus(campusToDelete: Campus[]){
+    // this.systemService.loading(true);
+    try {
+      let res = await this.campusService.deleteCampus(campusToDelete);
+      return res ;
+    } catch (error) {
+      this.errorTemplateHandler.processError(error, {
+        notifyMethod: 'alert',
+        message: 'Hubo un error al eliminar el campus. Intente nuevamente.',
+      });
+    } finally{
+      // this.systemService.loading(false);
+    }
+  }
 
   async insertForm(){
     try {
       const campusInserted = await this.campusService.insertCampus( this.fbForm.value )
-      this.campuses.push(campusInserted);
+      // this.campuses.push(campusInserted);
       this.getCampuses();
       return campusInserted;
     } catch (error) {
@@ -222,10 +363,11 @@ export class CampusComponent implements OnInit {
 
   async deleteDoc(doc : any){
     this.confirmationService.confirm({
-      message: `Es necesario confirmar la acción para eliminar el documento <b>${doc.nombre}</b>. ¿Desea continuar?`,
-      acceptLabel: 'Eliminar',
-      acceptIcon: 'pi pi-trash mr-1',
-      rejectLabel: 'Cancelar',
+      header: 'Confirmar',
+      message: `Es necesario confirmar la acción para eliminar el documento <b>${doc.nombre}</b>. ¿Desea confirmar?`,
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      icon: 'pi pi-exclamation-triangle',
       key: 'campus',
       acceptButtonStyleClass: 'p-button-danger p-button-sm',
       rejectButtonStyleClass: 'p-button-secondary p-button-text p-button-sm',
@@ -424,28 +566,7 @@ export class CampusComponent implements OnInit {
     }
   }
 
-  //ELIMINAR
-  async deleteSelected(campus: any){
-    //Servicio para eliminar campus y archivos de mongo
-    try{
-      this.systemService.loading(true);
-      await this.campusService.deleteCampus(campus.Cod_campus);
-      this.dialog = false;
-      this.messageService.add({
-        key: 'campus',
-        severity: 'success',
-        detail: 'Campus eliminado exitosamente',
-      });
-      this.getCampuses()
- 
-    }
-    catch(e){
-      this.errorTemplateHandler.processError(e, {
-        notifyMethod: 'alert',
-        message: 'No se puede eliminar un campus en uso. Intente deshabilitar actualizando estado de campus.',
-      });
-    }
-  }
+
 
   openDeleteSelectedCampus(campusSelected: Campus[]){
 
@@ -458,9 +579,7 @@ export class CampusComponent implements OnInit {
       
     }
     
-    console.log(nombresCampusSelected);
     let message = '' ;
-
     if (nombresCampusSelected.length == 1) {
       message = `el campus: <b>${nombresCampusSelected}</b>`;
     } else {
@@ -468,18 +587,106 @@ export class CampusComponent implements OnInit {
       message = `los campus: <b>${nombresConSeparador}</b>`;
     }
 
-    console.log("message",message);
+
     
     this.confirmationService.confirm({
-      message: `Es necesario confirmar la acción para eliminar ${message}. ¿Desea continuar?`,
-      acceptLabel: 'Eliminar',
-      acceptIcon: 'pi pi-trash mr-1',
-      rejectLabel: 'Cancelar',
+      header: "Confirmar",
+      message: `Es necesario confirmar la acción para eliminar ${message}. ¿Desea confirmar?`,
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      icon: 'pi pi-exclamation-triangle',
       key: 'campus',
       acceptButtonStyleClass: 'p-button-danger p-button-sm',
       rejectButtonStyleClass: 'p-button-secondary p-button-text p-button-sm',
       accept: async () => {
         
+        try {
+
+          let res = await this.deleteCampus(campusSelected);
+
+
+          if ( res.deleted.length != 0){
+            //hay eliminados y se deben iterar
+            let nombresCampusDeleted = []
+            for (let i = 0; i < res.deleted.length; i++) {
+              const campusDeleted = res.deleted[i];
+              nombresCampusDeleted.push(campusDeleted.Descripcion_campus)
+              
+            }
+            let message = '' ;
+            if (nombresCampusDeleted.length == 1) {
+              message = `${nombresCampusDeleted}`;
+            } else {
+              let nombresConSeparador = nombresCampusDeleted.join(', ');
+              message = `${nombresConSeparador}`;
+            }
+
+            this.messageService.add({
+              key: 'campus',
+              severity: 'success',
+              detail: `Campus ${message} eliminado(s) exitosamente`,
+            });
+            this.getCampuses()
+
+          }
+
+          if (res.notDeleted.length != 0 ) {
+            // hay campus que no se pudieron eliminar por lo que hay desactivar/activar
+            let nombresCampusNotDeleted = []
+            for (let i = 0; i < res.notDeleted.length; i++) {
+              const campusNotDeleted = res.notDeleted[i];
+
+              nombresCampusNotDeleted.push(campusNotDeleted.Descripcion_campus)
+              
+            }
+
+            let message = '' ;
+            if (nombresCampusNotDeleted.length == 1) {
+              message = `${nombresCampusNotDeleted}`;
+            } else {
+              let nombresConSeparador = nombresCampusNotDeleted.join(', ');
+              message = `${nombresConSeparador}`;
+            }
+
+            this.confirmationService.confirm({
+              header: 'Desactivar',
+              message: `Los campus <b>${message}</b> están en uso por lo que no es posible eliminarlos. ¿Desea desactivarlos?`,
+              acceptLabel: 'Si',
+              rejectLabel: 'No',
+              icon: 'pi pi-exclamation-triangle',
+              key: 'campusUpdateByDeleted',
+              acceptButtonStyleClass: 'p-button-danger p-button-sm',
+              rejectButtonStyleClass: 'p-button-secondary p-button-text p-button-sm',
+              accept: async () => {
+                  
+                for (let i = 0; i < res.notDeleted.length; i++) {
+                  const campusNotDeleted = res.notDeleted[i];
+                  const updatedCampus = {
+                    Cod_campus: campusNotDeleted.Cod_campus,
+                    Descripcion_campus: campusNotDeleted.Descripcion_campus,
+                    Estado_campus: campusNotDeleted.Estado_campus === true ? campusNotDeleted.Estado_campus = false : campusNotDeleted.Estado_campus
+                  }
+                  await this.campusService.updateCampus( updatedCampus )
+                  
+                  this.getCampuses();
+                }
+                this.messageService.add({
+                  key: 'campus',
+                  severity: 'success',
+                  detail: `Campus ${message} desactivados exitosamente`,
+                });
+                  
+              }
+            })
+
+          }     
+          
+        } catch (error) {
+          this.errorTemplateHandler.processError(error, {
+            notifyMethod: 'alert',
+            message: 'Hubo un error al eliminar el campus. Intente nuevamente.',
+          });
+        }
         
       }
     })
@@ -504,6 +711,9 @@ export class CampusComponent implements OnInit {
       break;
       case 'delete':
         this.openDelete(event.data)
+      break;
+      case 'activate':
+        this.openActivate(event.data)
       break;
 
     }
